@@ -25,7 +25,7 @@ class Home extends React.Component {
                         <h3>Newest</h3>
                     </div>
                     <div className="col l10 offset-l1 section">
-                        <p className="flow-text">Here you can observe the newest Images shared on this
+                        <p className="flow-text">Observe the newest Images shared on this
                             Website. Also want to Submit your Images?
                         </p>
                     </div>
@@ -36,13 +36,15 @@ class Home extends React.Component {
                 </div>
                 <div id="newest" className="row section">
 
-                    {this
+                    {this.props.posts && this
                         .props
                         .posts
+                        .sort()
+                        .slice(0, 6)
                         .map((post, index )=> {
                             return (
                                 <div key={index} className="col l4">
-                                    <div onClick={this.handleModal.bind(this,index)} className="card">
+                                    <div  className="card">
                                         <div className="card-image">
                                             <img src={post.image}/>
 
@@ -72,7 +74,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        show: SHOW_NEWEST
+        show: SHOW_NEWEST,
     }, dispatch)
 }
 

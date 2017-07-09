@@ -9,7 +9,7 @@ class App extends React.Component {
                     <nav>
                         <div id="nav" className="nav-wrapper white">
                             <Link className="brand-logo black-text" to="/">
-                                <b>InstaClone</b>
+                                <b>Clone</b>
                             </Link>
                             <ul className="right">
                                 <li>

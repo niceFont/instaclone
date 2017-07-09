@@ -41,6 +41,20 @@ const initialstate = {
             description: "Just a day outside, enjoying the view ~~",
             title: "Walking on Sunshine..."
         },
+        {
+            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
+            user: "SamuelXoxO",
+            hearts: 20,
+            description: "Just a day outside, enjoying the view ~~",
+            title: "Walking on Sunshine..."
+        },
+        {
+            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
+            user: "SamuelXoxO",
+            hearts: 20,
+            description: "Just a day outside, enjoying the view ~~",
+            title: "Walking on Sunshine..."
+        },
     ]
 }
 

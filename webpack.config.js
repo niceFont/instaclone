@@ -4,7 +4,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 
 module.exports = {
-    devtool: 'source-map',
+    devtool: 'eval',
     entry: path.join(__dirname, "/components", "/Index.js"),
     output: {
         filename: "bundle.js",
