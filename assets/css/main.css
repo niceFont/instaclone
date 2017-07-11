@@ -5,3 +5,12 @@ div .row {
 .card {
     margin: 5em 1em 5em 1em;
 }
+
+span.valign-wrapper {
+    justify-content: center;
+}
+
+form input {
+    width: 100%;
+    margin: 2em 0 0 0;
+}

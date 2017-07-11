@@ -1,41 +1,51 @@
 import React from "react";
+import {connect} from "react-redux";
+import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
 import {Link} from "react-router";
 
 class App extends React.Component {
-    render() {
-        return (
-            <div>
-                <div className="navbar-fixed">
-                    <nav>
-                        <div id="nav" className="nav-wrapper white">
-                            <Link className="brand-logo black-text" to="/">
-                                <b>Clone</b>
-                            </Link>
-                            <ul className="right">
-                                <li>
-                                    <Link className="black-text" to="/" id="signup">Home</Link>
-                                </li>
-                                <li>
-                                    <Link className="black-text" to="/login" id="signup">Login</Link>
-                                </li>
-                                <li>
-                                    <Link className="black-text" to="/signup" id="signup">Sign Up</Link>
-                                </li>
+	componentDidMount() {
+		this.props.LOGGED_IN();
+	}
 
-                            </ul>
+	render() {
+		return (
+			<div>
+				< div className = "navbar-fixed" > <nav>
+					<div id="nav" className="nav-wrapper teal">
+						<ul className="right">
+							{this.props.authReducer.isLoggedIn && 
+								<li><Link to="/create" id="signup">New</Link></li>}
 
-                        </div>
+							<li><Link to="/" id="signup">Home</Link></li>
 
-                    </nav>
-                </div>
+							{!this.props.authReducer.isLoggedIn && 
+								<li><Link to="/login" id="signup">Login</Link></li>}
 
-                <div>
-                    {this.props.children}
-                </div>
-            </div>
-
-        )
-    }
+							{this.props.authReducer.isLoggedIn && <li>
+								<Link
+									
+									to={"/profile/" + this.props.authReducer.user.currentUser.email}
+									id="signup">{this.props.authReducer.user.currentUser.email}</Link>
+							</li>}
+                            
+							{this.props.authReducer.isLoggedIn && 
+								<li><Link href="#" onClick={this.props.LOGOUT}>Logout</Link></li>}
+							<li>
+								<Link to="/signup" id="signup">Sign Up</Link>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				</div>
+				<div>
+					{this.props.children}
+				</div>
+			</div>
+		);
+	}
 }
 
-module.exports = App;
+
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(App);

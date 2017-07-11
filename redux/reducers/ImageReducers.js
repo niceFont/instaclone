@@ -1,74 +1,10 @@
-const initialstate = {
-    posts: [{
-            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
-            user: "SamuelXoxO",
-            hearts: 20,
-            description: "Just a day outside, enjoying the view ~~",
-            title: "Walking on Sunshine..."
-        },
-        {
-            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
-            user: "SamuelXoxO",
-            hearts: 20,
-            description: "Just a day outside, enjoying the view ~~",
-            title: "Walking on Sunshine..."
-        },
-        {
-            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
-            user: "SamuelXoxO",
-            hearts: 20,
-            description: "Just a day outside, enjoying the view ~~",
-            title: "Walking on Sunshine..."
-        },
-        {
-            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
-            user: "SamuelXoxO",
-            hearts: 20,
-            description: "Just a day outside, enjoying the view ~~",
-            title: "Walking on Sunshine..."
-        },
-        {
-            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
-            user: "SamuelXoxO",
-            hearts: 20,
-            description: "Just a day outside, enjoying the view ~~",
-            title: "Walking on Sunshine..."
-        },
-        {
-            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
-            user: "SamuelXoxO",
-            hearts: 20,
-            description: "Just a day outside, enjoying the view ~~",
-            title: "Walking on Sunshine..."
-        },
-        {
-            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
-            user: "SamuelXoxO",
-            hearts: 20,
-            description: "Just a day outside, enjoying the view ~~",
-            title: "Walking on Sunshine..."
-        },
-        {
-            image: "https://cdn.iphonephotographyschool.com/wp-content/uploads/Eric-Ward-iPhone-Photos-41.jpg",
-            user: "SamuelXoxO",
-            hearts: 20,
-            description: "Just a day outside, enjoying the view ~~",
-            title: "Walking on Sunshine..."
-        },
-    ]
-}
-
-
-
-
-export function imageReducer(state = initialstate, action) {
-
-    switch (action.type) {
-
-        case "SHOW_NEWEST":
-            return state
-        default:
-            return state
-    }
-
+export function imageReducer(state = {}, action) {
+	switch (action.type) {
+	case "UPLOAD_FULFILLED":
+		return {...state, image: action.payload };
+	case "UPLOAD_REJECTED":
+		return {...state, err: action.payload };
+	default:
+		return state;
+	}
 }
