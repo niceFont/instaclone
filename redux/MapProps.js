@@ -5,16 +5,16 @@ import { bindActionCreators } from "redux";
 
 
 export function mapStateToProps(state) {
-	return { authReducer: state.authReducer, imageReducer: state.imageReducer };
+    return { authReducer: state.authReducer, imageReducer: state.imageReducer };
 }
 
 export function mapDispatchToProps(dispatch) {
-	return bindActionCreators({
-		SIGN_IN,
-		SHOW_NEWEST,
-		SIGN_UP,
-		LOGGED_IN,
-		LOGOUT,
-		UPLOAD
-	}, dispatch);
+    return bindActionCreators({
+        SIGN_IN,
+        SHOW_NEWEST,
+        SIGN_UP,
+        LOGGED_IN,
+        LOGOUT,
+        UPLOAD
+    }, dispatch);
 }

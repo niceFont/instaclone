@@ -1,13 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
-import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
 import {Link} from "react-router";
+import { SIGN_IN, LOGGED_IN, LOGOUT, SIGN_UP } from "../redux/actions/authActions.js";
+import { SHOW_NEWEST, UPLOAD } from "../redux/actions/ImageActions.js";
+import { bindActionCreators } from "redux";
 
 class App extends React.Component {
 	componentDidMount() {
 		this.props.LOGGED_IN();
 	}
-
 	render() {
 		return (
 			<div>
@@ -25,8 +26,8 @@ class App extends React.Component {
 							{this.props.authReducer.isLoggedIn && <li>
 								<Link
 									
-									to={"/profile/" + this.props.authReducer.user.currentUser.email}
-									id="signup">{this.props.authReducer.user.currentUser.email}</Link>
+									to={"/profile/" + this.props.authReducer.user.currentUser.displayName}
+									id="signup">{this.props.authReducer.user.currentUser.displayName}</Link>
 							</li>}
                             
 							{this.props.authReducer.isLoggedIn && 
@@ -46,6 +47,15 @@ class App extends React.Component {
 	}
 }
 
+function mapStateToProps(state) {
+	return { authReducer: state.authReducer, imageReducer: state.imageReducer };
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({
+		LOGGED_IN,
+	}, dispatch);
+}
 
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(App);

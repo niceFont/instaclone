@@ -1,30 +1,33 @@
 import React from "react";
-import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
 import {connect} from "react-redux";
 import Image from "./dumb-components/Home/Images.jsx";
 import Landing from "./dumb-components/Home/Landing.jsx";
+import { SIGN_IN, LOGGED_IN, LOGOUT, SIGN_UP } from "../redux/actions/authActions.js";
+import { SHOW_NEWEST, UPLOAD } from "../redux/actions/ImageActions.js";
+import { bindActionCreators } from "redux";
+
 
 class Home extends React.Component {
-
-	shouldComponentUpdate(nextProps) {
-		if(this.props !== nextProps) return true;
-		else return false;
+	componentWillMount() {
+		this.props.SHOW_NEWEST();
+		
 	}
+	
 	render() {
+		console.log("RENDER HERE");
+		console.log(this.props);
 		return (
+		
 			<div className="container">
 				<Landing />
 				<div id="newest" className="row section">
-					{this.props.posts && this
-						.props
-						.posts
-						.sort()
-						.slice(0, 6)
-						.map((post, index )=> {
-							return (
-								<Image index={index} image={post.image} user={post.user} description={post.description} />
-							);
-						})}
+					{undefined !== this.props.imageReducer.posts[0] && this.props.imageReducer.posts.map((post, index) => {
+						console.log(post.image);
+						return (<Image image={post.image} user={post.author.author} description={post.description} index={index} />);
+					})}
+					
+
+					
 				</div>
 			</div>
 
@@ -32,5 +35,15 @@ class Home extends React.Component {
 	}
 }
 
+function mapStateToProps(state) {
+	return { imageReducer: state.imageReducer };
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({
+		SHOW_NEWEST,
+		LOGGED_IN
+	}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps,null,{pure: false})(Home);

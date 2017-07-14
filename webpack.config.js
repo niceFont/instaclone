@@ -4,7 +4,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 
 module.exports = {
-    devtool: 'eval',
+    devtool: "eval",
     entry: path.join(__dirname, "/components", "/Index.js"),
     output: {
         filename: "bundle.js",
@@ -30,9 +30,9 @@ module.exports = {
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
             "process.env": {
-                'NODE_ENV': JSON.stringify('production')
+                "NODE_ENV": JSON.stringify("production")
             }
         }),
 
     ]
-}
+};

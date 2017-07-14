@@ -1,4 +1,15 @@
-export function authReducer(state = {}, action) {
+const initialstate = {
+	user: {
+		currentUser: null
+	},
+	isLoggedIn: false,
+	isFetching: false,
+	fetched: false,
+	error: null
+};
+
+
+export function authReducer(state = initialstate, action) {
 
 	switch (action.type) {
 	case "SIGN_IN_FULFILLED":
@@ -6,7 +17,7 @@ export function authReducer(state = {}, action) {
 		return {...state,
 			isLoggedIn: true,
 			user: {
-				currentUser: action.payload.providerData[0]
+				currentUser: action.payload
 			}
 		};
 	case "SIGN_IN_REJECTED":
@@ -18,7 +29,7 @@ export function authReducer(state = {}, action) {
 		return {...state,
 			isLoggedIn: true,
 			user: {
-				currentUser: action.payload.providerData[0]
+				currentUser: action.payload
 			}
 		};
 	case "IS_NOT_LOGGEDIN":
