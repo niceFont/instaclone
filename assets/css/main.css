@@ -3,7 +3,12 @@ div .row {
 }
 
 .card {
-    margin: 5em 1em 5em 1em;
+    margin: 0em 1em 5em 1em;
+    cursor: pointer;
+}
+
+.card p {
+    word-break: break-all;
 }
 
 span.valign-wrapper {

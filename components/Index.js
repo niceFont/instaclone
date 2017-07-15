@@ -8,6 +8,7 @@ import SignIn from "./SignIn.jsx";
 import Post from "./Post.jsx";
 import SignUp from "./SignUp.jsx";
 import store from "../redux/store";
+import Profile from "./Profile.jsx";
 
 
 
@@ -21,6 +22,7 @@ render(
 				<Route path="/login" component={SignIn}/>
 				<Route path="/create" component={Post}/>
 				<Route path="/signup" component={SignUp}/>
+				<Route path="/user/:username" component={Profile}/>
 			</Route>
 		</Router>
 	</Provider>, document.getElementById("app"));

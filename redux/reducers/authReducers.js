@@ -4,6 +4,7 @@ const initialstate = {
 	},
 	isLoggedIn: false,
 	isFetching: false,
+	guest: true,
 	fetched: false,
 	error: null
 };
@@ -16,6 +17,7 @@ export function authReducer(state = initialstate, action) {
 		console.log(action.payload);
 		return {...state,
 			isLoggedIn: true,
+			guest: false,
 			user: {
 				currentUser: action.payload
 			}
@@ -32,6 +34,8 @@ export function authReducer(state = initialstate, action) {
 				currentUser: action.payload
 			}
 		};
+	case "IS_GUEST":
+		return {...state, guest: true, isLoggedIn: false, user: null };
 	case "IS_NOT_LOGGEDIN":
 		return {...state,
 			isLoggedIn: action.payload

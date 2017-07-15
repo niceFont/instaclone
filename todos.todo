@@ -1,15 +1,19 @@
 GENERAL
-☐ Create Usernames
+✔ Create Usernames @done (14.7.2017, 22:09:03)
 ☐ Code splitting
-☐ Upload Images
-☐ Configure DB
+✔ Upload Images @done (14.7.2017, 22:08:49)
+✔ Configure DB @done (14.7.2017, 22:08:52)
 ☐ Prettier UI
+    ☐ Photo Grid
+    ☐ Loading
 ☐ Set PropTypes
-
+☐ Redirects
 
 
 DATABASE
-☐ USERS
-☐ POSTS
+✔ USERS @done (14.7.2017, 22:08:57)
+✔ POSTS @done (14.7.2017, 22:08:58)
 ☐ COMMENTS
-☐ IMAGES
+☐ UPDATE USER INFO
+☐ ADD PROFILE IMAGES
+✔ IMAGES @done (14.7.2017, 22:08:59)

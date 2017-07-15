@@ -3,7 +3,7 @@ import { storage, database } from "../../firebase/firebaseConfig";
 export function SHOW_NEWEST() {
 	return (dispatch) => {
 		dispatch({ type: "FETCHING_URLS", payload: null });
-		database.ref("posts").once("value")
+		database.ref("posts").orderByChild("timestamp").once("value")
 			.then(data => {
 				let posts = Object.keys(data.val()).map((item) => {
 					return new Promise((resolve, reject) => {
@@ -19,7 +19,7 @@ export function SHOW_NEWEST() {
 				});
 				Promise.all(posts)
 					.then(res => {
-						dispatch({ type: "FETCHED_URLS", payload: res });
+						dispatch({ type: "FETCHED_URLS", payload: res.reverse() });
 					})
 					.catch(err => {
 						dispatch({ type: "FETCHING_REJECTED", payload: err });
