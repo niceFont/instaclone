@@ -1,24 +1,25 @@
 import React from "react";
 import {ImageLoaderHOC} from "../../higher-order-components/ImageHOC.jsx";
+import {Link} from "react-router";
 
 const Image = (props) => {
-	console.log(props);
 	return (
-		<div key={props.index} className = "col s6 m6 l4" > 
-			<div className="card hoverable">
+		<li key={props.index} className = "col s12 m6 l4" > 
+			<div className="card large">
 				<div className="card-image">
 					<img src={props.image}/>
 				</div>
 				<div className="card-content">
 					<p><b>
-						<a className="black-text" href={"/user/" + props.user}>{props.user + " "}</a>
-					</b>{props.description}</p>
+						<Link className="black-text" to={"user/" + props.user}>{props.user + " "}</Link>
+					</b>{props.description.length > 150 ? props.description.slice(0,150)+ "...more": props.description}</p>
 				</div>
-				<div className="card-action">
-					<span className="col s6"></span>
+				<div className="card-action valign-wrapper">
+					<a className="btn-floating btn pink left-align"><i className="material-icons">grade</i></a>
+					<span className="col l6 right-align">{props.hearts + " Stars"}</span>
 				</div>
 			</div> 
-		</div>
+		</li>
 		
 	);};
 

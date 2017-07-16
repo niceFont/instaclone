@@ -11,7 +11,7 @@ export function SIGN_IN(email, password) {
 export function LOGGED_IN() {
 	return (dispatch) => {
 		auth.onAuthStateChanged(user => {
-			if (user) dispatch({ type: "IS_LOGGEDIN", payload: user });
+			if (user.providerData.length) dispatch({ type: "IS_LOGGEDIN", payload: user });
 			else {
 				auth.signInAnonymously();
 				dispatch({ type: "IS_GUEST", payload: null });
@@ -22,7 +22,10 @@ export function LOGGED_IN() {
 
 export function LOGOUT() {
 	return (dispatch) => {
-		auth.signOut().then(() => dispatch({ type: "LOGOUT", payload: false }));
+
+		auth.signInAnonymously();
+		dispatch({ type: "IS_GUEST", payload: false });
+
 	};
 }
 

@@ -11,6 +11,23 @@ class SignIn extends React.Component {
 			.bind(this);
 	}
 
+	componentWillMount() {
+		if(this.props.authReducer.isLoggedIn) {
+			this.props.router.push("/");
+		}
+	}
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.authReducer.isLoggedIn) {
+			this.props.router.push("/");
+		}
+	}
+
+	componentDidMount() {
+		if(this.props.authReducer.isLoggedIn) {
+			this.props.router.push("/");
+		}
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 		this
@@ -21,6 +38,7 @@ class SignIn extends React.Component {
 	}
 	
 	render() {
+		console.log(this.props);
 		return (
 			<div className="container">
 				<div className="row">

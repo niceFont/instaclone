@@ -18,7 +18,12 @@ class Home extends React.Component {
 			<div className="container">
 				<Landing />
 				<div id="newest" className="row">
-					<Image {...this.props} />
+					<div className="col l12">
+
+						<Image {...this.props} />
+						
+						
+					</div>
 				</div>
 			</div>
 

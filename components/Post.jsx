@@ -9,13 +9,30 @@ class Post extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	componentWillMount() {
+		if(!this.props.authReducer.isLoggedIn) {
+			this.props.router.push("/");
+		}
+	}
+	componentWillReceiveProps(nextProps) {
+		if(!nextProps.authReducer.isLoggedIn) {
+			this.props.router.push("/");
+		}
+	}
+
+	componentDidMount() {
+		if(!this.props.authReducer.isLoggedIn) {
+			this.props.router.push("/");
+		}
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 		if(this.prefile.files.length !== 0) {
 			this.props.UPLOAD(this.prefile.files[0],
-			this.props.authReducer.user.currentUser.uid,
-			this.props.authReducer.user.currentUser.displayName,
-			this.desc.value);
+				this.props.authReducer.user.currentUser.uid,
+				this.props.authReducer.user.currentUser.displayName,
+				this.desc.value);
 		}
 		
 		

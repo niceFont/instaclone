@@ -1,32 +1,38 @@
 import { storage, database } from "../../firebase/firebaseConfig";
+import { getImageUrl, getImagesRelated } from "../../firebase/helpers";
+
 
 export function SHOW_NEWEST() {
 	return (dispatch) => {
-		dispatch({ type: "FETCHING_URLS", payload: null });
-		database.ref("posts").orderByChild("timestamp").once("value")
-			.then(data => {
-				let posts = Object.keys(data.val()).map((item) => {
-					return new Promise((resolve, reject) => {
-						storage.ref(data.val()[item].image).getDownloadURL()
-							.then(url => {
-								resolve({...data.val()[item], image: url });
-							})
-							.catch(err => {
-								reject(err);
-								throw err;
-							});
-					});
-				});
-				Promise.all(posts)
-					.then(res => {
-						dispatch({ type: "FETCHED_URLS", payload: res.reverse() });
+		dispatch({ type: "FETCHING", payload: null });
+		getImageUrl()
+			.then(res => {
+				dispatch({ type: "FETCHED_URLS", payload: res.reverse() });
+			})
+			.catch(err => {
+				dispatch({ type: "FETCHING_REJECTED", payload: err });
+			});
+
+	};
+}
+
+
+export function SHOW_RELATED_POSTS(username) {
+	return (dispatch) => {
+		dispatch({ type: "FETCHING", payload: null });
+		getImageUrl()
+			.then(res => {
+				getImagesRelated(username, res)
+					.then(posts => {
+						dispatch({ type: "USER_POSTS_FOUND", payload: posts.reverse() });
 					})
 					.catch(err => {
-						dispatch({ type: "FETCHING_REJECTED", payload: err });
+						dispatch({ type: "USER_POSTS_NOT_FOUND", payload: err });
 					});
 			});
 	};
 }
+
 
 export function UPLOAD(img, userId, user, description) {
 	return (dispatch) => {

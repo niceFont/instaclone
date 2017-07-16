@@ -22,7 +22,7 @@ render(
 				<Route path="/login" component={SignIn}/>
 				<Route path="/create" component={Post}/>
 				<Route path="/signup" component={SignUp}/>
-				<Route path="/user/:username" component={Profile}/>
+				<Route path="/user(/:user)" component={Profile}/>
 			</Route>
 		</Router>
 	</Provider>, document.getElementById("app"));

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 
 class App extends React.Component {
-	componentDidMount() {
+	componentWillMount() {
 		this.props.LOGGED_IN();
 	}
 	render() {
@@ -26,7 +26,7 @@ class App extends React.Component {
 							{!this.props.authReducer.guest && <li>
 								<Link
 									
-									to={"/profile/" + this.props.authReducer.user.currentUser.displayName}
+									to={"/user/" + this.props.authReducer.user.currentUser.displayName}
 									id="signup">{this.props.authReducer.user.currentUser.displayName}</Link>
 							</li>}
                             

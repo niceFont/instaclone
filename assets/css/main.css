@@ -11,9 +11,7 @@ div .row {
     word-break: break-all;
 }
 
-span.valign-wrapper {
-    justify-content: center;
-}
+span.valign-wrapper {}
 
 form input {
     width: 100%;

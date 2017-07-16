@@ -4,10 +4,17 @@ GENERAL
 ✔ Upload Images @done (14.7.2017, 22:08:49)
 ✔ Configure DB @done (14.7.2017, 22:08:52)
 ☐ Prettier UI
-    ☐ Photo Grid
-    ☐ Loading
+    ✔ Photo Grid @done (16.7.2017, 12:29:43)
+    ✔ Loading @done (16.7.2017, 12:29:39)
+    ✔ Truncate Text @done (16.7.2017, 12:29:46)
+    ☐ Better Color
 ☐ Set PropTypes
-☐ Redirects
+    ✔ App @done (16.7.2017, 12:30:12)
+    ☐ Home
+    ☐ Profile
+    ☐ Sign In
+✔ Redirects @done (16.7.2017, 12:30:42)
+
 
 
 DATABASE
@@ -17,3 +24,7 @@ DATABASE
 ☐ UPDATE USER INFO
 ☐ ADD PROFILE IMAGES
 ✔ IMAGES @done (14.7.2017, 22:08:59)
+☐ ALLOWED FILETYPES
+    ☐ IMAGES
+    ☐ GIFS
+    ☐ VIDEOS

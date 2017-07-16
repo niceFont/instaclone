@@ -21,6 +21,12 @@ export function getImageUrl() {
 		});
 }
 
-export let posts = [];
-getImageUrl().then(res => posts.push(res));
-console.log(posts);
+export function getImagesRelated(username, data) {
+	return new Promise((resolve, reject) => {
+		let userPosts = data.filter(item => {
+			return item.author.author === username;
+		});
+		if (userPosts.length > 0) resolve(userPosts);
+		else reject("This User has not Committed any Posts");
+	});
+}
