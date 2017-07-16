@@ -15,18 +15,16 @@ class Home extends React.Component {
 	
 	render() {
 		return (
-			<div className="container">
+			<div>
 				<Landing />
-				<div id="newest" className="row">
-					<div className="col l12">
-
-						<Image {...this.props} />
-						
-						
+				<div className="container">
+					<div id="newest" className="row">
+						<div className="col l12">
+							<Image {...this.props} />
+						</div>
 					</div>
 				</div>
 			</div>
-
 		);
 	}
 }

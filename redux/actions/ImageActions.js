@@ -53,7 +53,7 @@ export function UPLOAD(img, userId, user, description) {
 					authorId: userId,
 					author: user
 				},
-				hearts: 0,
+				stars: 0,
 				comments: [],
 				timestamp: Date.now()
 			});

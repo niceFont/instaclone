@@ -13,27 +13,27 @@ class App extends React.Component {
 		return (
 			<div>
 				< div className = "navbar-fixed" > <nav>
-					<div id="nav" className="nav-wrapper teal">
+					<div id="nav" className="nav-wrapper white">
 						<ul className="right">
 							{!this.props.authReducer.guest && 
-								<li><Link to="/create" id="signup">New</Link></li>}
+								<li><Link  className="black-text" to="/create" id="signup">New</Link></li>}
 
-							<li><Link to="/" id="signup">Home</Link></li>
+							<li><Link className="black-text" to="/" id="signup">Home</Link></li>
 
 							{this.props.authReducer.guest && 
-								<li><Link to="/login" id="signup">Login</Link></li>}
+								<li><Link className="black-text" to="/login" id="signup">Login</Link></li>}
 
 							{!this.props.authReducer.guest && <li>
 								<Link
-									
+									className="black-text"
 									to={"/user/" + this.props.authReducer.user.currentUser.displayName}
 									id="signup">{this.props.authReducer.user.currentUser.displayName}</Link>
 							</li>}
                             
 							{!this.props.authReducer.guest && 
-								<li><Link href="#" onClick={() => this.props.LOGOUT()}>Logout</Link></li>}
+								<li><Link className="black-text" href="#" onClick={() => this.props.LOGOUT()}>Logout</Link></li>}
 							<li>
-								<Link to="/signup" id="signup">Sign Up</Link>
+								<Link className="black-text" to="/signup" id="signup">Sign Up</Link>
 							</li>
 						</ul>
 					</div>

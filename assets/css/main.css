@@ -1,5 +1,11 @@
-div .row {
-    margin: 6em 0 5em 0;
+#landing-back {
+    padding: 1em;
+    margin: 0 0 5em 0;
+    box-shadow: inset 0px -1px 1px 1px rgba(0, 0, 0, .4);
+}
+
+.row {
+    margin: 2em 0 2em 0;
 }
 
 .card {
