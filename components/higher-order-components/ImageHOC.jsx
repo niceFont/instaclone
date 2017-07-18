@@ -22,7 +22,7 @@ export function ImageLoaderHOC (Component) {
 			);
 			else {
 				let list = this.props.imageReducer.posts.map((post, index) =>{
-					return <Component image={post.image} user={post.author.author} index={index} description={post.description} hearts={post.hearts}/>;
+					return <Component {...post} index={index} {...this.props}/>;
 				});
                 
 				return (<ul className="row">

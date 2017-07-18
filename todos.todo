@@ -8,12 +8,14 @@ GENERAL
     ✔ Loading @done (16.7.2017, 12:29:39)
     ✔ Truncate Text @done (16.7.2017, 12:29:46)
     ☐ Better Color
+    ✔ Modals @done (18.7.2017, 17:46:12)
 ☐ Set PropTypes
     ✔ App @done (16.7.2017, 12:30:12)
     ☐ Home
     ☐ Profile
     ☐ Sign In
 ✔ Redirects @done (16.7.2017, 12:30:42)
+☐ Updating own Profile
 
 
 
@@ -28,3 +30,6 @@ DATABASE
     ☐ IMAGES
     ☐ GIFS
     ☐ VIDEOS
+
+
+☐ WRITE TESTS

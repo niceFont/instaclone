@@ -8,6 +8,22 @@ class SignUp extends React.Component {
 		e.preventDefault();
 		this.props.SIGN_UP(this.username.value, this.email.value, this.password.value);
 	}
+	componentWillMount() {
+		if(this.props.authReducer.isLoggedIn) {
+			this.props.router.push("/");
+		}
+	}
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.authReducer.isLoggedIn) {
+			this.props.router.push("/");
+		}
+	}
+
+	componentDidMount() {
+		if(this.props.authReducer.isLoggedIn) {
+			this.props.router.push("/");
+		}
+	}
 	render() {
 		return (
 			<div className="container">

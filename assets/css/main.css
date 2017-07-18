@@ -1,7 +1,7 @@
 #landing-back {
     padding: 1em;
     margin: 0 0 5em 0;
-    box-shadow: inset 0px -1px 1px 1px rgba(0, 0, 0, .4);
+    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, .4);
 }
 
 .row {
@@ -22,4 +22,39 @@ span.valign-wrapper {}
 form input {
     width: 100%;
     margin: 2em 0 0 0;
+}
+
+#modal {
+    top: 10%;
+}
+
+.modal {
+    max-height: 100%;
+    width: 30%;
+}
+
+#modal-img {
+    max-width: 80%;
+    height: auto;
+}
+
+#modal-back {
+    display: block;
+    z-index: 100;
+    height: 100vh;
+    opacity: .6;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #212121;
+    right: 0;
+    padding: 0;
+    width: 100%;
+    margin: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+}
+
+#test {
+    top: -20px;
 }
