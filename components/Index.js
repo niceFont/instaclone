@@ -9,17 +9,22 @@ import Post from "./Post.jsx";
 import SignUp from "./SignUp.jsx";
 import store from "../redux/store";
 import Profile from "./Profile.jsx";
+import {auth} from "../firebase/firebaseConfig";
 
-
-
+function deleteAnon () {
+	if (store.getState().authReducer.guest) {
+		auth.currentUser.delete()
+			.then(res => console.log(res))
+			.catch(err => console.log(err));
+	}
+}
 
 render(
-	
 	<Provider store={store}>
 		<Router history={hashHistory}>
-			<Route path="/" component={App}>
+			<Route path="/" component={App} onLeave={deleteAnon}>
 				<IndexRoute component={Home}/>
-				<Route path="/login" component={SignIn}/>
+				<Route path="/login" component={SignIn} />
 				<Route path="/create" component={Post}/>
 				<Route path="/signup" component={SignUp}/>
 				<Route path="/user(/:user)" component={Profile}/>

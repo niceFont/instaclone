@@ -3,10 +3,27 @@ import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
 import {connect} from "react-redux";
 
 class SignUp extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			similar: null
+		};
+		this.checkSimilar = this.checkSimilar.bind(this);
+	}
 
 	handleSubmit(e) {
 		e.preventDefault();
 		this.props.SIGN_UP(this.username.value, this.email.value, this.password.value);
+	}
+
+	checkSimilar() {
+		
+		if (this.password1.value === this.password2.value) {
+			this.setState({
+				similar: true
+			});
+		}
+		else this.setState({similar: false});
 	}
 	componentWillMount() {
 		if(this.props.authReducer.isLoggedIn) {
@@ -37,12 +54,27 @@ class SignUp extends React.Component {
 								<input ref={email => this.email = email} type="email" placeholder="E-Mail" />
 							</div>
 							<div className="input-field">
-								<input ref={pass => this.password = pass} type="password" placeholder="Enter your Password" />
+
+								{this.state.similar ? 
+									<div className="row">
+										<span className="col l8 offset-l4 valign-wrapper center-align green-text"><i className="material-icons">check</i> Passwords match!</span>
+									</div>
+									
+									:
+									<div className="row">
+										<span className="col l8 offset-l4 valign-wrapper center-align red-text">
+											<i className="material-icons">close</i> Passwords do not match!
+										</span>
+										
+									</div>
+								}
+
+								<input ref={pass => this.password1 = pass} onChange={() => this.checkSimilar} type="password" placeholder="Enter your Password" />
 							</div>
 							<div className="input-field">
-								<input type="password" placeholder="Re-Enter your Password" />
+								<input ref={pass => this.password2 = pass} onChange={this.checkSimilar} type="password" placeholder="Re-Enter your Password" />
 							</div>
-							<input type="submit" value="Sign Up" className="btn-large deep-orange" />
+							<input disabled={!this.state.similar} type="submit" value="Sign Up" className="btn-large deep-orange" />
 						</form>
 					</div>
 

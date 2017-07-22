@@ -9,6 +9,7 @@ class App extends React.Component {
 	componentWillMount() {
 		this.props.LOGGED_IN();
 	}
+
 	render() {
 		return (
 			<div>

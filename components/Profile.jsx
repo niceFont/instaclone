@@ -54,7 +54,16 @@ class Profile extends React.Component {
 					</div>
 					<div className="row">
 						<div className="col l12">
-							<Images {...this.props} openModal={this.openModal}/>
+							{null !== this.props.imageReducer.error ? 
+								<div className="container">
+									<div className="row">
+										<div className="col l8 offset-l2 center-align">
+											<span className="chip blue"><b>{this.props.imageReducer.error}</b></span>
+										</div>
+									</div>
+								</div>
+								:
+								<Image {...this.props} openModal={this.openModal}/>}
 						</div>
 					</div>
 				</div>

@@ -21,7 +21,9 @@ export function imageReducer(state = initialstate, action) {
 	case "UPLOAD_FULFILLED":
 		return {...state, image: action.payload };
 	case "UPLOAD_REJECTED":
-		return {...state, err: action.payload };
+		return {...state, error: action.payload };
+	case "FETCHING_404":
+		return {...state, error: "404 No Post Found :(" };
 
 	default:
 		return state;
