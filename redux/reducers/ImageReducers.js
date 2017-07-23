@@ -3,7 +3,7 @@ const initialstate = {
 	image: null,
 	isFetching: false,
 	fetched: false,
-	error: null
+	error: false
 };
 
 export function imageReducer(state = initialstate, action) {
@@ -23,7 +23,7 @@ export function imageReducer(state = initialstate, action) {
 	case "UPLOAD_REJECTED":
 		return {...state, error: action.payload };
 	case "FETCHING_404":
-		return {...state, error: "404 No Post Found :(" };
+		return {...state, error: "404 Posts Could not be Found" };
 
 	default:
 		return state;

@@ -9,11 +9,26 @@ class SignUp extends React.Component {
 			similar: null
 		};
 		this.checkSimilar = this.checkSimilar.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleSubmit(e) {
 		e.preventDefault();
-		this.props.SIGN_UP(this.username.value, this.email.value, this.password.value);
+		this.props.SIGN_UP(this.username.value, this.email.value, this.password1.value, this.prefile.files[0]);
+	}
+
+	handleChange() {
+		if(this.prefile.files.length !== 0) {
+			let Reader = new FileReader();
+			Reader.onload = (e) => {
+				this.preimg.src = e.target.result;
+				this.prename.value = this.prefile.files[0].name; 
+			};
+			Reader.onerror = (err) => {
+				console.log(err);
+			};
+			Reader.readAsDataURL(this.prefile.files[0]);
+		}
 	}
 
 	checkSimilar() {
@@ -45,8 +60,20 @@ class SignUp extends React.Component {
 		return (
 			<div className="container">
 				<div className="row">
+					<div className="col l2 offset-l5 center-align">
+						<img ref={img => this.preimg = img } className="responsive-img" />
+					</div>
 					<div className="col l8 offset-l2 center-align">
 						<form onSubmit={this.handleSubmit.bind(this)}>
+							<div className="file-field input-field">
+								<div className="btn">
+									<span>File</span>
+									<input type="file" ref={img => this.prefile = img} onChange={this.handleChange} />
+								</div>
+								<div className="file-path-wrapper">
+									<input type="text" ref={txt => this.prename = txt} placeholder="Select your Local File." className="file-path validate" />
+								</div>
+							</div>
 							<div className="input-field">
 								<input ref={user => this.username = user} type="text" placeholder="Username" />
 							</div>

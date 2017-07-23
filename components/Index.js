@@ -28,6 +28,7 @@ render(
 				<Route path="/create" component={Post}/>
 				<Route path="/signup" component={SignUp}/>
 				<Route path="/user(/:user)" component={Profile}/>
+				<Route path="*" component={()=> <h1>404 Not Found</h1>}/>
 			</Route>
 		</Router>
 	</Provider>, document.getElementById("app"));

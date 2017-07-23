@@ -16,7 +16,7 @@ const Image = (props) => {
 				</div>
 				<div className="card-action valign-wrapper">
 					<a className="btn-floating btn pink left-align"><i className="material-icons">grade</i></a>
-					<span className="col l6 right-align">{props.hearts + " Stars"}</span>
+					<span className="col l6 right-align">{props.stars + " Stars"}</span>
 				</div>
 			</div> 
 		</li>

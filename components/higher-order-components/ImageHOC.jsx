@@ -20,7 +20,17 @@ export function ImageLoaderHOC (Component) {
 					</div>
 				</div>
 			);
-			else {
+			if(this.props.imageReducer.error) {
+				return 	(<div className="container">
+					<div className="row">
+						<div className="col l8 offset-l2 center-align">
+							<span className="chip blue"><b>{this.props.imageReducer.error}</b></span>
+						</div>
+					</div>
+				</div>);
+			}
+
+			else  {
 				let list = this.props.imageReducer.posts.map((post, index) =>{
 					return <Component {...post} index={index} {...this.props}/>;
 				});
@@ -30,6 +40,7 @@ export function ImageLoaderHOC (Component) {
 				</ul>
 				);
 			}
+	
 
 				
 		}

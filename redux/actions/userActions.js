@@ -6,12 +6,24 @@ export function EXISTS(username) {
 		dispatch({ type: "SEARCHING", payload: null });
 		database.ref("users").once("value")
 			.then(data => {
+				console.log(data.val());
 				let user = Object.keys(data.val()).filter((item) => {
 					return data.val()[item].name === username;
 				});
-				if (user.length > 0) dispatch({ type: "USER_FOUND", payload: data.val()[user] });
-				else dispatch({ type: "USER_NOT_FOUND", payload: null });
+				if (user.length === 0) dispatch({ type: "USER_NOT_FOUND", payload: null });
+				else return data.val()[user];
+			})
+			.then(user => {
+				console.log(user.photoURL);
+				storage.ref().child(user.photoURL).getDownloadURL()
+					.then(url => {
+						dispatch({ type: "USER_FOUND", payload: {...user, photoURL: url } });
+					});
+
+
 			});
+
+
 	};
 }
 

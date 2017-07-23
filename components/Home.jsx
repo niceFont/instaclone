@@ -6,7 +6,10 @@ import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
 import PropTypes from "prop-types";
 import Modal from "./dumb-components/Modal.jsx";
 
-
+let style = {
+	display: "block",
+	zIndex: 1000
+};
 class Home extends React.Component {
 
 	constructor(props) {
@@ -23,7 +26,6 @@ class Home extends React.Component {
 	openModal(id) {
 		this.setState({isOpen: true,
 			data: id});
-		console.log(id);
 	}
 	closeModal() {
 		this.setState({
@@ -39,21 +41,43 @@ class Home extends React.Component {
 	render() {
 		return (
 			<div>
-				{this.state.isOpen && <Modal closeModal={this.closeModal} post={this.props.imageReducer.posts[this.state.data]}/>}
+				{this.state.isOpen && 
+				<Modal closeModal={this.closeModal}>
+					<div style={style} id="modal" className="modal">
+						<div className="modal-content">
+							<div className="row">
+								<div className="col l12 center-align">
+									<img id="modal-img" src={this.props.imageReducer.posts[this.state.data].image} className="responsive-img" />
+								</div>
+							</div>
+							<div className="row">
+								<div className="col l10 offset-l1">
+									<p><b>
+										<a
+											className="black-text" 
+											href={"#/user/" + this.props.imageReducer.posts[this.state.data].author.author}
+										>
+											{this.props.imageReducer.posts[this.state.data].author.author + " "}
+										</a>
+									</b>
+									{this.props.imageReducer.posts[this.state.data].description}
+									</p>
+
+								</div>
+							</div>
+							<div className="row valign-wrapper">
+								<span className="col l6 "><a className="btn-floating btn pink left-align"><i className="material-icons">grade</i></a></span>
+								<span className="col l6 right-align">{this.props.imageReducer.posts[this.state.data].stars + " Stars"}</span>
+							</div>
+						</div>
+					</div>
+				</Modal>
+				}
 				<Landing />
 				<div className="container">
 					<div id="newest" className="row">
 						<div className="col l12">
-							{null !== this.props.imageReducer.error ? 
-								<div className="container">
-									<div className="row">
-										<div className="col l8 offset-l2 center-align">
-											<span className="chip blue"><b>{this.props.imageReducer.error}</b></span>
-										</div>
-									</div>
-								</div>
-								:
-								<Image {...this.props} openModal={this.openModal}/>}
+							<Image {...this.props} openModal={this.openModal}/>
 						</div>
 					</div>
 				</div>

@@ -27,22 +27,24 @@ export function SHOW_RELATED_POSTS(username) {
 		dispatch({ type: "FETCHING", payload: null });
 		database.ref("posts").orderByChild("author/author").equalTo(username).once("value")
 			.then(data => {
-				console.log(data.val());
 				getImageUrl(data)
 					.then(res => {
 						dispatch({ type: "USER_POSTS_FOUND", payload: res.reverse() });
 					})
 					.catch(err => {
-						dispatch({ type: "FETCHING_404", payload: err });
+						dispatch({ type: "FETCHING_404", payload: null });
 					});
 
+			})
+			.catch(err => {
+				dispatch({ type: "FETCHING_404", payload: null });
 			});
 
 	};
 }
 
 
-export function UPLOAD(img, userId, user, description) {
+export function UPLOAD_IMAGE(img, userId, user, description) {
 	return (dispatch) => {
 		try {
 			let filePath = storage.ref().child(`images/${img.name}`);

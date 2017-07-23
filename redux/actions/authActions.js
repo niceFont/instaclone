@@ -1,4 +1,4 @@
-import { auth, database } from "../../firebase/firebaseConfig";
+import { auth, database, storage } from "../../firebase/firebaseConfig";
 
 export function SIGN_IN(email, password) {
 	return (dispatch) => {
@@ -12,10 +12,11 @@ export function LOGGED_IN() {
 	return (dispatch) => {
 		auth.onAuthStateChanged(user => {
 
-			if (user !== null && user.isAnonymous === null) dispatch({ type: "IS_LOGGEDIN", payload: user });
+			if (user !== null && user.isAnonymous === false) dispatch({ type: "IS_LOGGEDIN", payload: user });
 			else {
-				auth.signInAnonymously();
-				dispatch({ type: "IS_GUEST", payload: null });
+				auth.signInAnonymously()
+					.then(res => dispatch({ type: "IS_GUEST", payload: res }));
+
 			}
 		});
 	};
@@ -30,7 +31,7 @@ export function LOGOUT() {
 	};
 }
 
-export function SIGN_UP(username, email, password) {
+export function SIGN_UP(username, email, password, img) {
 	return (dispatch) => {
 		auth.createUserWithEmailAndPassword(email, password)
 			.then(user => {
@@ -40,13 +41,17 @@ export function SIGN_UP(username, email, password) {
 				return user;
 			})
 			.then(user => {
+				storage.ref().child(`images/avatar/${img.name}`).put(img);
+				return user;
+			})
+			.then(user => {
 
 				console.log(user);
 				database.ref(`users/${user.uid}`).set({
-					displayName: user.displayName,
+					name: username,
 					email: user.email,
-					emailVerified: false,
-					photoURL: null,
+					emailVerified: user.emailVerified,
+					photoURL: `images/avatar/${img.name}`,
 				});
 			})
 			.catch(err => console.error(err));

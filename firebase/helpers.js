@@ -1,5 +1,5 @@
 import { storage } from "./firebaseConfig";
-import { database } from "./firebaseConfig";
+
 
 export function getImageUrl(data) {
 

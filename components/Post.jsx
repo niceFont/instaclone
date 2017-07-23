@@ -29,7 +29,7 @@ class Post extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		if(this.prefile.files.length !== 0) {
-			this.props.UPLOAD(this.prefile.files[0],
+			this.props.UPLOAD_IMAGE(this.prefile.files[0],
 				this.props.authReducer.user.currentUser.uid,
 				this.props.authReducer.user.currentUser.displayName,
 				this.desc.value);
