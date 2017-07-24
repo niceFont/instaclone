@@ -4,6 +4,8 @@ import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
 import {connect} from "react-redux";
 import Images from "./dumb-components/Home/Images.jsx";
 import Modal from "./dumb-components/Modal.jsx";
+import ModalAvatar from "./dumb-components/Profile/ModalAvatar.jsx";
+
 
 let style = {
 	display: "block",
@@ -29,9 +31,19 @@ class Profile extends React.Component {
 			data: id});
 		console.log(id);
 	}
+
+	openSettings(setting) {
+		switch(setting) {
+		case "Avatar":
+			this.setState({
+				avatarSettingsOpen: true
+			});
+		}
+	}
 	closeModal() {
 		this.setState({
-			isOpen: false
+			isOpen: false,
+			avatarSettingsOpen: false,
 		});
 	}
 	componentWillMount() {
@@ -72,12 +84,17 @@ class Profile extends React.Component {
 					</div>
 				</Modal>
 				}
+				{this.state.avatarSettingsOpen &&
+					<Modal closeModal={this.closeModal}>
+						<ModalAvatar />
+					</Modal>
+				}
 				<div className="container">
 					<div className="row valign-wrapper">
 						<div className="card-panel  z-depth-1">
 							<div className="col s2">
-								{this.props.authReducer.user.currentUser.displayName === this.props.params.user ?
-									<a onClick={() => console.log("wow")}><img src={this.props.userReducer.user.photoURL} className="circle responsive-img" /></a>
+								{this.props.authReducer.isLoggedIn && this.props.authReducer.user.currentUser.displayName === this.props.params.user  ?
+									<a onClick={() => this.openSettings("Avatar")}><img src={this.props.userReducer.user.photoURL} className="circle responsive-img" /></a>
 									:
 									<img src={this.props.userReducer.user.photoURL} className="circle responsive-img" />
 								}

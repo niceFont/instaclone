@@ -14,7 +14,6 @@ class Home extends React.Component {
 
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			isOpen: false,
 			data: null
@@ -62,7 +61,6 @@ class Home extends React.Component {
 									</b>
 									{this.props.imageReducer.posts[this.state.data].description}
 									</p>
-
 								</div>
 							</div>
 							<div className="row valign-wrapper">

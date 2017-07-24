@@ -41,6 +41,7 @@ class SignUp extends React.Component {
 		else this.setState({similar: false});
 	}
 	componentWillMount() {
+		this.props.LOGGED_IN();
 		if(this.props.authReducer.isLoggedIn) {
 			this.props.router.push("/");
 		}
