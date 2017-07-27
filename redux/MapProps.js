@@ -1,12 +1,13 @@
 import { SIGN_IN, LOGGED_IN, LOGOUT, SIGN_UP } from "../redux/actions/authActions.js";
 import { SHOW_NEWEST, UPLOAD_IMAGE, SHOW_RELATED_POSTS } from "../redux/actions/ImageActions.js";
 import { EXISTS, RESET } from "../redux/actions/userActions.js";
+import { UPDATE_AVATAR } from "../redux/actions/updateActions.js";
 import { bindActionCreators } from "redux";
 
 
 
 export function mapStateToProps(state) {
-	return { authReducer: state.authReducer, imageReducer: state.imageReducer, userReducer: state.userReducer };
+	return { authReducer: state.authReducer, imageReducer: state.imageReducer, userReducer: state.userReducer, updateReducer: state.updateReducer };
 }
 
 export function mapDispatchToProps(dispatch) {
@@ -14,6 +15,7 @@ export function mapDispatchToProps(dispatch) {
 		SIGN_IN,
 		SHOW_NEWEST,
 		SIGN_UP,
+		UPDATE_AVATAR,
 		SHOW_RELATED_POSTS,
 		RESET,
 		EXISTS,

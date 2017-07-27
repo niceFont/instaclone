@@ -49,6 +49,12 @@ class Profile extends React.Component {
 	componentWillMount() {
 		this.props.SHOW_RELATED_POSTS(this.props.params.user);
 	}
+
+	componentWillReceiveProps (nextProps) {
+		if(this.props.updateReducer.update_success) {
+			this.forceUpdate();
+		}
+	}
 	render() {
 		return (
 			<div>
@@ -86,7 +92,7 @@ class Profile extends React.Component {
 				}
 				{this.state.avatarSettingsOpen &&
 					<Modal closeModal={this.closeModal}>
-						<ModalAvatar />
+						<ModalAvatar {...this.props} closeModal={this.closeModal}/>
 					</Modal>
 				}
 				<div className="container">

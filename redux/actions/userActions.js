@@ -6,7 +6,6 @@ export function EXISTS(username) {
 		dispatch({ type: "SEARCHING", payload: null });
 		database.ref("users").once("value")
 			.then(data => {
-				console.log(data.val());
 				let user = Object.keys(data.val()).filter((item) => {
 					return data.val()[item].name === username;
 				});
@@ -14,19 +13,19 @@ export function EXISTS(username) {
 				else return data.val()[user];
 			})
 			.then(user => {
-				console.log(user.photoURL);
 				storage.ref().child(user.photoURL).getDownloadURL()
 					.then(url => {
 						dispatch({ type: "USER_FOUND", payload: {...user, photoURL: url } });
 					});
 
 
+			})
+			.catch(err => {
+				dispatch({ type: "USER_NOT_FOUND", payload: null });
 			});
-
 
 	};
 }
-
 
 export function RESET() {
 	return (dispatch) => {
