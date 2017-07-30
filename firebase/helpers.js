@@ -1,21 +1,19 @@
-import { storage } from "./firebaseConfig";
+export function getPostsAsArrays(data) {
 
-
-export function getImageUrl(data) {
-
-	let posts = Object.keys(data.val()).map((item) => {
-		return new Promise((resolve, reject) => {
-			storage.ref(data.val()[item].image).getDownloadURL()
-				.then(url => {
-					resolve({...data.val()[item], image: url });
-				})
-				.catch(err => {
-					reject(err);
-					throw err;
-				});
-		});
+	let posts = [];
+	Object.keys(data.val()).map((item) => {
+		posts.push(data.val()[item]);
 	});
-	return Promise.all(posts);
+	return posts;
 
+}
 
+export function memoize(func) {
+	let cache = {};
+
+	return async function() {
+		let args = JSON.stringify(arguments);
+		cache[args] = cache[args] || func.apply(this, arguments);
+		return cache[args];
+	};
 }

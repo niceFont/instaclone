@@ -48,7 +48,7 @@ class ModalAvatar extends React.Component {
 							<input type="text" ref={txt => this.prename = txt} placeholder="Select your Local File." className="file-path validate" />
 						</div>
 					</div>
-					<input type="submit" value="Update" />
+					<input type="submit" className="btn" value="Update" />
 				</form>
 			</div>
 		</div>);

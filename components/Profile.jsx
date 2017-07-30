@@ -5,12 +5,7 @@ import {connect} from "react-redux";
 import Images from "./dumb-components/Home/Images.jsx";
 import Modal from "./dumb-components/Modal.jsx";
 import ModalAvatar from "./dumb-components/Profile/ModalAvatar.jsx";
-
-
-let style = {
-	display: "block",
-	zIndex: 1000
-};
+import {ImageModal} from "./dumb-components/ImageModal.jsx";
 
 class Profile extends React.Component {
 	constructor(props) {
@@ -24,12 +19,14 @@ class Profile extends React.Component {
 		};
 		this.openModal = this.openModal.bind(this);
 		this.closeModal = this.closeModal.bind(this);
+		this.openSettings = this.openSettings.bind(this);
+		this.handleDescSubmit = this.handleDescSubmit.bind(this);
+		
 	}
 
 	openModal(id) {
 		this.setState({isOpen: true,
 			data: id});
-		console.log(id);
 	}
 
 	openSettings(setting) {
@@ -38,85 +35,95 @@ class Profile extends React.Component {
 			this.setState({
 				avatarSettingsOpen: true
 			});
+			break;
+		case "Description":
+			this.setState({
+				descriptionSettingsOpen: true
+			});
+			break;
 		}
 	}
+
+	
+
 	closeModal() {
 		this.setState({
 			isOpen: false,
 			avatarSettingsOpen: false,
+			descriptionSettingsOpen: false
 		});
 	}
 	componentWillMount() {
 		this.props.SHOW_RELATED_POSTS(this.props.params.user);
 	}
 
-	componentWillReceiveProps (nextProps) {
-		if(this.props.updateReducer.update_success) {
+	componentWillReceiveProps(nextProps) {
+		if(nextProps.userReducer.update_success) {
+			this.setState({
+				descriptionSettingsOpen: false,
+				avatarSettingsOpen: false
+			});
 			this.forceUpdate();
 		}
 	}
+	
+	handleDescSubmit(e) {
+		e.preventDefault();
+		this.props.UPDATE_DESCRIPTION(this.props.authReducer.user.currentUser.displayName, this.description.value);
+	}
+
 	render() {
 		return (
 			<div>
-				{this.state.isOpen && 
+				{
+					this.state.isOpen && 
 				<Modal closeModal={this.closeModal}>
-					<div style={style} id="modal" className="modal">
-						<div className="modal-content">
-							<div className="row">
-								<div className="col l12 center-align">
-									<img id="modal-img" src={this.props.imageReducer.posts[this.state.data].image} className="responsive-img" />
-								</div>
-							</div>
-							<div className="row">
-								<div className="col l10 offset-l1">
-									<p><b>
-										<a
-											className="black-text" 
-											href={"#/user/" + this.props.imageReducer.posts[this.state.data].author.author}
-										>
-											{this.props.imageReducer.posts[this.state.data].author.author + " "}
-										</a>
-									</b>
-									{this.props.imageReducer.posts[this.state.data].description}
-									</p>
-
-								</div>
-							</div>
-							<div className="row valign-wrapper">
-								<span className="col l6 "><a className="btn-floating btn pink left-align"><i className="material-icons">grade</i></a></span>
-								<span className="col l6 right-align">{this.props.imageReducer.posts[this.state.data].stars + " Stars"}</span>
-							</div>
-						</div>
-					</div>
+					<ImageModal {...this.props} data={this.state.data} />
 				</Modal>
 				}
-				{this.state.avatarSettingsOpen &&
+				{
+					this.state.avatarSettingsOpen &&
 					<Modal closeModal={this.closeModal}>
 						<ModalAvatar {...this.props} closeModal={this.closeModal}/>
 					</Modal>
 				}
 				<div className="container">
 					<div className="row valign-wrapper">
-						<div className="card-panel  z-depth-1">
-							<div className="col s2">
-								{this.props.authReducer.isLoggedIn && this.props.authReducer.user.currentUser.displayName === this.props.params.user  ?
-									<a onClick={() => this.openSettings("Avatar")}><img src={this.props.userReducer.user.photoURL} className="circle responsive-img" /></a>
-									:
-									<img src={this.props.userReducer.user.photoURL} className="circle responsive-img" />
+						<div className="col l12 card-panel  z-depth-1">
+							<div className="col l2">
+								{
+									this.props.authReducer.isLoggedIn && this.props.authReducer.user.currentUser.displayName === this.props.params.user  ?
+										<a onClick={() => this.openSettings("Avatar")}><img src={this.props.userReducer.user.photoURL} className="circle responsive-img" /></a>
+										:
+										<img src={this.props.userReducer.user.photoURL} className="circle responsive-img" />
 								}
-								
 							</div>
-							<div className="col s10">
-								<h4>{this.props.params.user}</h4>
-								<p>Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder 
-									Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder 
-									Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder 
-								</p>
-							
-								{this.props.authReducer.isLoggedIn && <button className="btn blue">Edit Profile</button>}
+							<div className="col l10">
+								<h4><b>{this.props.params.user}</b></h4>
+							</div>
+							<div className="row">
+								{
+									!this.state.descriptionSettingsOpen && <div className="col l9">
+										{this.props.userReducer.user.description && <p>{this.props.userReducer.user.description}
+										</p>}
+										{this.props.authReducer.isLoggedIn && <button onClick={() => this.openSettings("Description")} className="btn blue">Edit Description</button>}
+									</div>
+								}
+
+								{
+									this.state.descriptionSettingsOpen && 
+									<div className="col l5 center-align">
+										<form onSubmit={this.handleDescSubmit}>
+											<div className="input-field">
+												<textarea placeholder={this.props.userReducer.user.description} ref={(desc)=> this.description = desc} className="materialize-textarea">
+												</textarea>
+											</div>
+											<input  type="submit" value="Save" className="btn" />
+										</form>
+									</div>
+								}
 							</div>
 						</div>
-						
 					</div>
 					<div className="row">
 						<div className="col l12">							

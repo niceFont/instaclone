@@ -24,7 +24,7 @@ export function ImageLoaderHOC (Component) {
 				return 	(<div className="container">
 					<div className="row">
 						<div className="col l8 offset-l2 center-align">
-							<span className="chip blue"><b>{this.props.imageReducer.error}</b></span>
+							<span className="chip blue white-text"><b>{this.props.imageReducer.error}</b></span>
 						</div>
 					</div>
 				</div>);
