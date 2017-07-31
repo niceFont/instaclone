@@ -1,12 +1,16 @@
 export function getPostsAsArrays(data) {
 
 	let posts = [];
-	Object.keys(data.val()).map((item) => {
-		posts.push(data.val()[item]);
+	Object.keys(data.val()).forEach((item) => {
+		if (data.val()[item].comments) {
+			posts.push({...data.val()[item], comments: Object.keys(data.val()[item].comments).map(x => data.val()[item].comments[x]) });
+		} else posts.push({...data.val()[item] });
 	});
 	return posts;
 
 }
+
+
 
 export function memoize(func) {
 	let cache = {};

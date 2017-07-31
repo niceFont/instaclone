@@ -26,6 +26,11 @@ export function imageReducer(state = initialstate, action) {
 		return {...state, image: action.payload, uploaded: true, isUploading: false };
 	case "UPLOAD_REJECTED":
 		return {...state, error: action.payload };
+	case "COMMENT_FULFILLED":
+		console.log(action.payload);
+		return {...state, isUploading: false, uploaded: true, posts: action.payload };
+	case "COMMENT_REJECTED":
+		return {...state, isUploading: false, uploaded: false, error: action.payload };
 	case "FETCHING_404":
 		return {...state, isFetching: false, error: "404 Posts Could not be Found", uploaded: false, isUploading: false };
 	default:

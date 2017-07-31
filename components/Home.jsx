@@ -38,6 +38,7 @@ class Home extends React.Component {
 		this.props.SHOW_NEWEST();
 		
 	}
+
 	
 	render() {
 		return (

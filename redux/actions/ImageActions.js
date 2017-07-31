@@ -66,7 +66,8 @@ export function UPLOAD_IMAGE(img, userId, user, description) {
 				},
 				stars: 0,
 				comments: [],
-				timestamp: Date.now()
+				timestamp: Date.now(),
+				postID: newKey
 			})
 				.then(() => resolve(null))
 				.catch(err => reject(err));
@@ -90,4 +91,50 @@ export function UPLOAD_IMAGE(img, userId, user, description) {
 		}
 
 	};
+}
+
+
+
+export function ADD_COMMENT(username, postID, message) {
+	let generateKey = () => {
+		return new Promise((resolve) => {
+			let key = database.ref().child("posts").push().key;
+			resolve(key);
+		});
+	};
+	let postComment = (key) => {
+		return new Promise((resolve, reject) => {
+			database.ref(`posts/${postID}/comments/${key}`).set({
+				user: username,
+				comment: message,
+				created_at: Date.now()
+			})
+				.then(() => resolve(null))
+				.catch(err => reject(err));
+		});
+	};
+
+	let getUpdatedPosts = () => {
+		return new Promise((resolve, reject) => {
+			database.ref("posts").limitToFirst(9).once("value")
+				.then(posts => resolve(posts))
+				.catch(err => reject(err));
+		});
+
+	};
+	return async(dispatch) => {
+		dispatch({ type: "UPLOADING", payload: null });
+		try {
+			let key = memoize(async() => generateKey());
+			let post = memoize(async() => postComment(await key()));
+			let getUpdated = memoize(async() => getUpdatedPosts(await post()));
+			let [a, b, c] = await Promise.all([key(), post(), getUpdated()]);
+
+			dispatch({ type: "COMMENT_FULFILLED", payload: getPostsAsArrays(c) });
+		} catch (err) {
+			dispatch({ type: "COMMENT_REJECTED", payload: err });
+		}
+
+	};
+
 }
