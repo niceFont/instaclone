@@ -9,7 +9,7 @@ export function SHOW_NEWEST() {
 			.then(data => {
 				if (null !== data.val()) {
 
-					dispatch({ type: "FETCHED_URLS", payload: getPostsAsArrays(data) });
+					dispatch({ type: "FETCHED_URLS", payload: getPostsAsArrays(data).reverse() });
 				} else dispatch({ type: "FETCHING_404", payload: null });
 
 			});
@@ -22,7 +22,7 @@ export function SHOW_RELATED_POSTS(username) {
 		dispatch({ type: "FETCHING", payload: null });
 		database.ref("posts").orderByChild("author/authorName").equalTo(username).once("value")
 			.then(data => {
-				dispatch({ type: "USER_POSTS_FOUND", payload: getPostsAsArrays(data) });
+				dispatch({ type: "USER_POSTS_FOUND", payload: getPostsAsArrays(data).reverse() });
 			})
 			.catch(err => {
 				dispatch({ type: "FETCHING_404", payload: err });

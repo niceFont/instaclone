@@ -2,6 +2,7 @@ import React from "react";
 import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
 import {connect} from "react-redux";
 
+
 class SignUp extends React.Component {
 	constructor(props) {
 		super(props);

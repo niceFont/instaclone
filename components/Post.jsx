@@ -1,6 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
+import {WaitForUpload} from "./higher-order-components/SignupHOC.jsx";
+
 
 class Post extends React.Component {
 	constructor(props) {
@@ -83,4 +85,4 @@ class Post extends React.Component {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
+export default connect(mapStateToProps, mapDispatchToProps)(WaitForUpload(Post));

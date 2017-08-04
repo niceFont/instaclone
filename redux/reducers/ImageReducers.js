@@ -27,7 +27,6 @@ export function imageReducer(state = initialstate, action) {
 	case "UPLOAD_REJECTED":
 		return {...state, error: action.payload };
 	case "COMMENT_FULFILLED":
-		console.log(action.payload);
 		return {...state, isUploading: false, uploaded: true, posts: action.payload };
 	case "COMMENT_REJECTED":
 		return {...state, isUploading: false, uploaded: false, error: action.payload };
