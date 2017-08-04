@@ -115,7 +115,8 @@ class Profile extends React.Component {
 									<div className="col l5 center-align">
 										<form onSubmit={this.handleDescSubmit}>
 											<div className="input-field">
-												<textarea placeholder={this.props.userReducer.user.description} ref={(desc)=> this.description = desc} className="materialize-textarea">
+												<textarea ref={(desc)=> this.description = desc} className="materialize-textarea">
+													{this.props.userReducer.user.description} 
 												</textarea>
 											</div>
 											<input  type="submit" value="Save" className="btn" />

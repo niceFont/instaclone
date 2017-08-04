@@ -55,7 +55,7 @@ export class ImageModal extends React.Component {
 					<span className="col l6 "><a className="btn-floating btn pink left-align"><i className="material-icons">grade</i></a></span>
 					<span className="col l6 ">{this.props.imageReducer.posts[this.props.data].stars + " Stars"}</span>
 				</div>
-				<div className="row">
+				{!this.props.authReducer.guest ?  <div className="row">
 					<div className="col l10 offset-l1">
 						<form onSubmit={this.handleComment}>
 							<div className="input-field">
@@ -64,6 +64,14 @@ export class ImageModal extends React.Component {
 							<input type="submit" value="Post" className="btn btn-small" />
 						</form>
 					</div>
+				</div>
+					:
+
+					<div className="col l10 offset-l1 center-align">
+						<span className="grey-text"><a href="#/login">Log-In</a> to leave a Comment...</span>
+					</div>
+				}
+				<div className="row">	
 					<Comments {...this.props} />
 				</div>
 			</div>

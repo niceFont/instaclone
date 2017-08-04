@@ -52,7 +52,7 @@ class Home extends React.Component {
 				<Landing />
 				<div className="container">
 					<div id="newest" className="row">
-						<div className="col l12">
+						<div className="col s12 m12 l12">
 							<Image {...this.props} openModal={this.openModal}/>
 						</div>
 					</div>

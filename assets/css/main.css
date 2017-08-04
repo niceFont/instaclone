@@ -33,6 +33,14 @@ form input {
     top: 10%;
 }
 
+.card-panel {
+    padding: 3em !important;
+}
+
+.card.large {
+    height: 400px !important;
+}
+
 .modal {
     max-height: 70%;
     width: 30%;
