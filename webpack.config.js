@@ -23,10 +23,6 @@ module.exports = {
 			title: "My App",
 			template: "./assets/html/Index.html"
 		}),
-		new webpack.DllReferencePlugin({
-			context: path.join(__dirname),
-			manifest: require(path.join(__dirname, "/vendors/vendor-manifest.json"))
-		}),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.DefinePlugin({
 			"process.env": {
