@@ -7,10 +7,7 @@ import PropTypes from "prop-types";
 import Modal from "./dumb-components/Modal.jsx";
 import {ImageModal} from "./dumb-components/ImageModal.jsx";
 
-let style = {
-	display: "block",
-	zIndex: 1000
-};
+
 
 class Home extends React.Component {
 
@@ -22,6 +19,7 @@ class Home extends React.Component {
 		};
 		this.openModal = this.openModal.bind(this);
 		this.closeModal = this.closeModal.bind(this);
+		this.handleUpvote = this.handleUpvote.bind(this);
 	}
 
 	openModal(id) {
@@ -34,9 +32,15 @@ class Home extends React.Component {
 		});
 	}
 
-	componentWillMount() {
+	handleUpvote(id) {
+		this.props.UPVOTE(
+			this.props.authReducer.user.currentUser.displayName, 
+			this.props.imageReducer.posts[id].postID
+		);
+	}
+
+	componentDidMount() {
 		this.props.SHOW_NEWEST();
-		
 	}
 
 	
@@ -46,7 +50,7 @@ class Home extends React.Component {
 				{
 					this.state.isOpen && 
 				<Modal closeModal={this.closeModal}>
-					<ImageModal {...this.props} data={this.state.data} />
+					<ImageModal handleUpvote={this.handleUpvote} {...this.props} data={this.state.data} />
 				</Modal>
 				}
 				<Landing />

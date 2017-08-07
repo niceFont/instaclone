@@ -52,8 +52,23 @@ export class ImageModal extends React.Component {
 					</div>
 				</div>
 				<div className="row valign-wrapper center-align">
-					<span className="col l6 "><a className="btn-floating btn pink left-align"><i className="material-icons">grade</i></a></span>
-					<span className="col l6 ">{this.props.imageReducer.posts[this.props.data].stars + " Stars"}</span>
+					<div className="col l6">
+						<button 
+							onClick={() => this.props.handleUpvote(this.props.data)}
+							className="btn-floating btn pink" 
+							disabled={!this.props.authReducer.isLoggedIn}>
+							<i className="material-icons">favorite</i>
+						</button>
+					</div>
+					<div className="col l6">
+						<span className="">
+							{this.props.imageReducer.posts[this.props.data].stars}
+						</span>
+						<i className="pink-text material-icons">favorite</i>
+					</div>
+
+					
+					
 				</div>
 				{!this.props.authReducer.guest ?  <div className="row">
 					<div className="col l10 offset-l1">

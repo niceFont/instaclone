@@ -21,3 +21,19 @@ export function memoize(func) {
 		return cache[args];
 	};
 }
+
+export function checkIfDuplicate(arr) {
+	let newArr = [];
+	arr.filter(item => {
+		if(newArr && newArr.indexOf(item) === -1) newArr.push(item);
+		else {
+			newArr = false;
+		}
+	});
+	return newArr ? false : true ;
+}
+
+
+export function removeDuplicate(arr, toBeRm) {
+	return arr.filter(item => item !== toBeRm);
+}

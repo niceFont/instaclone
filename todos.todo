@@ -1,6 +1,7 @@
 GENERAL
 ✔ Create Usernames @done (14.7.2017, 22:09:03)
 ☐ Code splitting
+    ☐ Profile Component
 ✔ Upload Images @done (14.7.2017, 22:08:49)
 ✔ Configure DB @done (14.7.2017, 22:08:52)
 ☐ Prettier UI
@@ -17,7 +18,8 @@ GENERAL
     ☐ Sign In
 ✔ Redirects @done (16.7.2017, 12:30:42)
 ✔ Updating own Profile @done (31.7.2017, 21:59:22)
-
+☐ Integrate Service Workers for offline use
+☐ Cache Webrequests if possible
 
 
 DATABASE
@@ -33,4 +35,4 @@ DATABASE
     ☐ VIDEOS
 
 
-☐ WRITE TESTS
+☐ WRITE TESTS!!!!

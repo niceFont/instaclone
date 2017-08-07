@@ -1,5 +1,5 @@
 import { storage, database } from "../../firebase/firebaseConfig";
-import { getPostsAsArrays, memoize } from "../../firebase/helpers";
+import { getPostsAsArrays, memoize,checkIfDuplicate,removeDuplicate } from "../../firebase/helpers";
 
 
 export function SHOW_NEWEST() {
@@ -137,4 +137,100 @@ export function ADD_COMMENT(username, postID, message) {
 
 	};
 
+}
+
+
+
+export function UPVOTE(username, postID) {
+	console.log(username, postID);
+	let getStars = () => {
+		return new Promise((resolve, reject) => {
+			database.ref(`posts/${postID}`).once("value")
+				.then(post => resolve(post.val().stars))
+				.catch(err => reject(err));
+		});
+	};
+
+	let getLikedPosts = () => {
+		return new Promise((resolve, reject) => {
+			database.ref("users").orderByChild("name").equalTo(username).once("value")
+				.then(user => resolve(user.val()))
+				.catch(err => reject(err));
+		});
+	};
+
+	let updateUserAcc = (likedPosts) => {
+		
+		return new Promise((resolve, reject) => {
+			let old = likedPosts[Object.keys(likedPosts)[0]].liked;
+			let check = typeof old !== "undefined" ? checkIfDuplicate([...old, postID]) : false;
+			if (!check){
+				database.ref(`users/${Object.keys(likedPosts)}`).update({
+					liked: typeof old !== "undefined" ? [...old, postID] : [postID]
+				})
+					.then(() => resolve(check))
+					.catch(err => reject(err));
+			}
+			else {
+				database.ref(`users/${Object.keys(likedPosts)}`).update({
+					liked: typeof old !== "undefined" ? removeDuplicate([...old], postID) : [postID]
+				})
+					.then(() => resolve(check))
+					.catch(err => reject(err));
+			}
+			
+		});
+	};
+
+	let upvotePost = (oldStarcount, duped) => {
+		
+		return new Promise((resolve, reject) => {
+			if (duped) {
+				database.ref(`posts/${postID}`).update({
+					stars: oldStarcount - 1
+				})
+					.then(() => resolve("DEC"))
+					.catch(err => reject(err));
+			}
+			else {
+				database.ref(`posts/${postID}`).update({
+					stars: oldStarcount + 1
+				})
+					.then(() => resolve("INC"))
+					.catch(err => reject(err));
+			}
+		});
+	};
+
+	let getNewPosts = () => {
+		return new Promise((resolve,reject) => {
+			database.ref("posts").once("value")
+				.then(posts => resolve(posts))
+				.catch(err => reject(err));
+		});
+	};
+
+	return async (dispatch) => {
+		dispatch({type: "UPLOADING", payload: null});
+		try {
+			let stars = memoize(async () => getStars());
+			let old = memoize(async () => getLikedPosts());
+			let update = memoize(async () => updateUserAcc(await old()));
+			let upvote = memoize(async () => upvotePost(await stars(), await update()));
+			let newPosts = memoize(async() => getNewPosts(await upvote()));
+
+			let [a,b,c,d,e] = await Promise.all([stars(),old(), update() ,upvote(), newPosts()]);
+
+			console.log(a);
+			console.log(b);
+			console.log(c);
+			console.log(d);
+			dispatch({type: "UPVOTE_FULFILLED", payload: getPostsAsArrays(e)});
+			
+		}
+		catch(err) {
+			dispatch({type: "UPLOAD_REJECTED", payload:err});
+		}
+
+	};
 }
