@@ -8,14 +8,13 @@ class Comments extends React.Component {
 	}
 	formatDate(unix) {
 		let d = new Date(unix);
-		console.log(d.toLocaleDateString());
 		return d.toLocaleDateString();
 	}
 	render() {
 		
 		return (
 			<div className="container">
-				{this.props.imageReducer.posts[this.props.data].comments.map(comment => {
+				{this.props.imageReducer.posts[this.props.data].comments.reverse().map(comment => {
 					return (
 						<div className="row">
 							<div className="col l8">

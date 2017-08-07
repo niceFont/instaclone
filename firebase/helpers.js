@@ -32,3 +32,8 @@ export function checkIfDuplicate(arr) {
 	});
 	return newArr ? false : true ;
 }
+
+
+export function removeDuplicate(arr, toBeRm) {
+	return arr.filter(item => item !== toBeRm);
+}

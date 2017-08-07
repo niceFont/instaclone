@@ -7,10 +7,7 @@ import PropTypes from "prop-types";
 import Modal from "./dumb-components/Modal.jsx";
 import {ImageModal} from "./dumb-components/ImageModal.jsx";
 
-let style = {
-	display: "block",
-	zIndex: 1000
-};
+
 
 class Home extends React.Component {
 
@@ -42,9 +39,8 @@ class Home extends React.Component {
 		);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.SHOW_NEWEST();
-		
 	}
 
 	
@@ -61,7 +57,7 @@ class Home extends React.Component {
 				<div className="container">
 					<div id="newest" className="row">
 						<div className="col s12 m12 l12">
-							<Image {...this.props} handleUpvote={this.handleUpvote} openModal={this.openModal}/>
+							<Image {...this.props} openModal={this.openModal}/>
 						</div>
 					</div>
 				</div>

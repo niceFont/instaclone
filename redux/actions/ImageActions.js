@@ -1,5 +1,5 @@
 import { storage, database } from "../../firebase/firebaseConfig";
-import { getPostsAsArrays, memoize,checkIfDuplicate } from "../../firebase/helpers";
+import { getPostsAsArrays, memoize,checkIfDuplicate,removeDuplicate } from "../../firebase/helpers";
 
 
 export function SHOW_NEWEST() {
@@ -163,29 +163,51 @@ export function UPVOTE(username, postID) {
 		
 		return new Promise((resolve, reject) => {
 			let old = likedPosts[Object.keys(likedPosts)[0]].liked;
-			console.log(typeof typeof old);
 			let check = typeof old !== "undefined" ? checkIfDuplicate([...old, postID]) : false;
-			database.ref(`users/${Object.keys(likedPosts)}`).update({
-				liked: typeof old !== "undefined" ? [...old, postID] : [postID]
-			})
-				.then(() => resolve(check))
-				.catch(err => reject(err));
+			if (!check){
+				database.ref(`users/${Object.keys(likedPosts)}`).update({
+					liked: typeof old !== "undefined" ? [...old, postID] : [postID]
+				})
+					.then(() => resolve(check))
+					.catch(err => reject(err));
+			}
+			else {
+				database.ref(`users/${Object.keys(likedPosts)}`).update({
+					liked: typeof old !== "undefined" ? removeDuplicate([...old], postID) : [postID]
+				})
+					.then(() => resolve(check))
+					.catch(err => reject(err));
+			}
+			
 		});
 	};
 
 	let upvotePost = (oldStarcount, duped) => {
 		
 		return new Promise((resolve, reject) => {
-			if (duped) return resolve(null);
+			if (duped) {
+				database.ref(`posts/${postID}`).update({
+					stars: oldStarcount - 1
+				})
+					.then(() => resolve("DEC"))
+					.catch(err => reject(err));
+			}
 			else {
 				database.ref(`posts/${postID}`).update({
 					stars: oldStarcount + 1
 				})
-					.then(() => resolve(null))
+					.then(() => resolve("INC"))
 					.catch(err => reject(err));
 			}
 		});
+	};
 
+	let getNewPosts = () => {
+		return new Promise((resolve,reject) => {
+			database.ref("posts").once("value")
+				.then(posts => resolve(posts))
+				.catch(err => reject(err));
+		});
 	};
 
 	return async (dispatch) => {
@@ -194,13 +216,16 @@ export function UPVOTE(username, postID) {
 			let stars = memoize(async () => getStars());
 			let old = memoize(async () => getLikedPosts());
 			let update = memoize(async () => updateUserAcc(await old()));
-			let upvote = memoize(async () => upvotePost(await stars()));
+			let upvote = memoize(async () => upvotePost(await stars(), await update()));
+			let newPosts = memoize(async() => getNewPosts(await upvote()));
 
-			let [a,b,c,d] = await Promise.all([stars(),old(), update() ,upvote()]);
+			let [a,b,c,d,e] = await Promise.all([stars(),old(), update() ,upvote(), newPosts()]);
 
 			console.log(a);
 			console.log(b);
-			dispatch({type: "UPVOTE_FULFILLED", payload: null});
+			console.log(c);
+			console.log(d);
+			dispatch({type: "UPVOTE_FULFILLED", payload: getPostsAsArrays(e)});
 			
 		}
 		catch(err) {

@@ -17,19 +17,21 @@ const Image = (props) => {
 					<p><b>
 						<Link 
 							className="black-text" 
-							to={"user/" + props.author.authorName}>
+							to={`user/${props.author.authorName}`}>
 							{props.author.authorName + " "}
 						</Link>
 					</b>{props.description.length > 150 ? props.description.slice(0,150)+ "...more": props.description}</p>
 				</div>
 				<div className="card-action valign-wrapper">
-					<button 
-						onClick={() => props.handleUpvote(props.index)}
-						className="btn-floating btn pink left-align" 
-						disabled={!props.authReducer.isLoggedIn}>
-						<i className="material-icons">grade</i>
-					</button>
-					<span className="col l6 right-align">{props.stars + " Stars"}</span>
+					<div className="col l6 valign-wrapper">
+						<span>
+							{props.stars}
+						</span>
+						<i className="material-icons">favorite</i>
+					</div>
+					<div className="col l6 valign-wrapper">
+						<span><i>{`${props.comments.length} Comments`}</i></span>
+					</div>
 				</div>
 			</div> 
 		</li>

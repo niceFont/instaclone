@@ -106,7 +106,11 @@ class Profile extends React.Component {
 									!this.state.descriptionSettingsOpen && <div className="col l9">
 										{this.props.userReducer.user.description && <p>{this.props.userReducer.user.description}
 										</p>}
-										{this.props.authReducer.isLoggedIn && <button onClick={() => this.openSettings("Description")} className="btn blue">Edit Description</button>}
+										{this.props.authReducer.isLoggedIn && this.props.authReducer.user.currentUser.displayName === this.props.params.user ? 
+											<button onClick={() => this.openSettings("Description")} className="btn blue">Edit Description</button>
+											:
+											null
+										}
 									</div>
 								}
 
