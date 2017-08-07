@@ -64,4 +64,4 @@ class Home extends React.Component {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps,null,{pure: false})(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
