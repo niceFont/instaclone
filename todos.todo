@@ -17,7 +17,8 @@ GENERAL
     ☐ Sign In
 ✔ Redirects @done (16.7.2017, 12:30:42)
 ✔ Updating own Profile @done (31.7.2017, 21:59:22)
-
+☐ Integrate Service Workers for offline use
+☐ Cache Webrequests if possible
 
 
 DATABASE
@@ -33,4 +34,4 @@ DATABASE
     ☐ VIDEOS
 
 
-☐ WRITE TESTS
+☐ WRITE TESTS!!!!

@@ -49,9 +49,9 @@ class App extends React.Component {
 }
 
 App.PropTypes = {
-	displayName: PropTypes.string,
-	guest: PropTypes.bool.isRequired,
-	isLoggedIn: PropTypes.bool.isRequired,
+	authReducer: PropTypes.object.isRequired,
+	imageReducer: PropTypes.object.isRequired,
+	userReducer: PropTypes.object.isRequired,
 };
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(App);
