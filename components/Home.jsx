@@ -9,7 +9,7 @@ import {ImageModal} from "./dumb-components/ImageModal.jsx";
 
 
 
-class Home extends React.Component {
+export class Home extends React.Component {
 
 	constructor(props) {
 		super(props);

@@ -7,7 +7,7 @@ const Image = (props) => {
 		<li 
 			onClick={() => props.openModal(props.index)} 
 			key={props.index} 
-			className = "col s8 m6 l4" 
+			className = "col s12 m6 l4" 
 		> 
 			<div className="card large">
 				<div className="card-image">

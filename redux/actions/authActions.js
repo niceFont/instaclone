@@ -3,7 +3,7 @@ import { memoize } from "../../firebase/helpers";
 
 export function SIGN_IN(email, password) {
 	return (dispatch) => {
-		auth.signInWithEmailAndPassword(email, password)
+		auth().signInWithEmailAndPassword(email, password)
 			.then(user => dispatch({ type: "SIGN_IN_FULFILLED", payload: user }))
 			.catch(e => dispatch({ type: "SIGN_IN_REJECTED", payload: e }));
 	};
@@ -12,10 +12,10 @@ export function SIGN_IN(email, password) {
 
 export function LOGGED_IN() {
 	return (dispatch) => {
-		auth.onAuthStateChanged(user => {
+		auth().onAuthStateChanged(user => {
 			if (user !== null && user.isAnonymous === false) dispatch({ type: "IS_LOGGEDIN", payload: user });
 			else {
-				auth.signInAnonymously()
+				auth().signInAnonymously()
 					.then(res => dispatch({ type: "IS_GUEST", payload: res }));
 
 			}
@@ -25,7 +25,7 @@ export function LOGGED_IN() {
 
 export function LOGOUT() {
 	return (dispatch) => {
-		auth.signOut();
+		auth().signOut();
 	};
 }
 
@@ -33,7 +33,7 @@ export function SIGN_UP(username, email, password, img) {
 
 	let createUser = () => {
 		return new Promise((resolve, reject) => {
-			auth.createUserWithEmailAndPassword(email, password)
+			auth().createUserWithEmailAndPassword(email, password)
 				.then(user => {
 					user.updateProfile({
 						displayName: username,
@@ -48,7 +48,7 @@ export function SIGN_UP(username, email, password, img) {
 
 	let uploadImg = () => {
 		return new Promise((resolve, reject) => {
-			storage.ref().child(`images/${username}/avatar/${img.name}`).put(img)
+			storage().ref().child(`images/${username}/avatar/${img.name}`).put(img)
 				.then(res => resolve(res))
 				.catch(err => reject(err));
 		});
@@ -56,7 +56,7 @@ export function SIGN_UP(username, email, password, img) {
 
 	let getUrlFromPath = () => {
 		return new Promise((resolve, reject) => {
-			storage.ref().child(`images/${username}/avatar/${img.name}`).getDownloadURL()
+			storage().ref().child(`images/${username}/avatar/${img.name}`).getDownloadURL()
 				.then(url => resolve(url))
 				.catch(err => reject(err));
 		});
@@ -64,7 +64,7 @@ export function SIGN_UP(username, email, password, img) {
 
 	let signUpUser = (user, url) => {
 		return new Promise((resolve, reject) => {
-			database.ref(`users/${user.uid}`).set({
+			database().ref(`users/${user.uid}`).set({
 				name: username,
 				email: user.email,
 				emailVerified: user.emailVerified,
@@ -87,7 +87,7 @@ export function SIGN_UP(username, email, password, img) {
 
 		await Promise.all([upload(), getUrl(), signUp(), create(), ])
 			.then(() =>
-				dispatch({ type: "SIGN_UP_FULFILLED", payload: auth.currentUser })
+				dispatch({ type: "SIGN_UP_FULFILLED", payload: auth().currentUser })
 			)
 			.catch(err => {
 				dispatch({ type: "SIGN_UP_REJECTED", payload: err });

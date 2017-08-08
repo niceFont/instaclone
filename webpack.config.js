@@ -31,5 +31,10 @@ module.exports = {
 		}),
 		new webpack.optimize.UglifyJsPlugin(),
 
-	]
+	],
+	"env": {
+		"test": {
+			"presets": ["es2015"]
+		}
+	}
 };

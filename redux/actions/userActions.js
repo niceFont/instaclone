@@ -4,7 +4,7 @@ import { memoize } from "../../firebase/helpers";
 export function EXISTS(username) {
 	return (dispatch) => {
 		dispatch({ type: "SEARCHING", payload: null });
-		database.ref("users").orderByChild("name").equalTo(username).once("value")
+		database().ref("users").orderByChild("name").equalTo(username).once("value")
 			.then(data => {
 				dispatch({ type: "USER_FOUND", payload: data.val()[Object.keys(data.val())] });
 			})
@@ -25,7 +25,7 @@ export function RESET() {
 export function UPDATE_AVATAR(newAvatar, oldAvatar, username) {
 	let uploadImg = () => {
 		return new Promise((resolve, reject) => {
-			storage.ref().child(`images/${username}/avatar/${newAvatar.name}`).put(newAvatar)
+			storage().ref().child(`images/${username}/avatar/${newAvatar.name}`).put(newAvatar)
 				.then(res => resolve(res))
 				.catch(err => reject(err));
 		});
@@ -33,7 +33,7 @@ export function UPDATE_AVATAR(newAvatar, oldAvatar, username) {
 
 	let getImgUrl = () => {
 		return new Promise((resolve, reject) => {
-			storage.ref().child(`images/${username}/avatar/${newAvatar.name}`).getDownloadURL()
+			storage().ref().child(`images/${username}/avatar/${newAvatar.name}`).getDownloadURL()
 				.then(url => resolve(url))
 				.catch(err => reject(err));
 		});
@@ -41,9 +41,9 @@ export function UPDATE_AVATAR(newAvatar, oldAvatar, username) {
 
 	let updateProfile = (url) => {
 		return new Promise((resolve, reject) => {
-			database.ref("users").orderByChild("name").equalTo(username).once("value")
+			database().ref("users").orderByChild("name").equalTo(username).once("value")
 				.then(user => {
-					database.ref(`users/${Object.keys(user.val())[0]}`).update({
+					database().ref(`users/${Object.keys(user.val())[0]}`).update({
 						photoURL: url,
 						photoPATH: `images/${username}/avatar/${newAvatar.name}`
 					})
@@ -56,10 +56,10 @@ export function UPDATE_AVATAR(newAvatar, oldAvatar, username) {
 
 	let deleteOldAvatar = () => {
 		return new Promise((resolve) => {
-			console.log(storage.ref().child(oldAvatar));
-			if (storage.ref().child(oldAvatar) !== null)
+			console.log(storage().ref().child(oldAvatar));
+			if (storage().ref().child(oldAvatar) !== null)
 
-				storage.ref().child(oldAvatar).delete().then(res => resolve(res));
+				storage().ref().child(oldAvatar).delete().then(res => resolve(res));
 		});
 
 	};
@@ -85,9 +85,9 @@ export function UPDATE_DESCRIPTION(username, description) {
 
 	let updateDesc = () => {
 		return new Promise((resolve, reject) => {
-			database.ref("users").orderByChild("name").equalTo(username).once("value")
+			database().ref("users").orderByChild("name").equalTo(username).once("value")
 				.then(olduser => {
-					database.ref(`users/${Object.keys(olduser.val())[0]}`).update({
+					database().ref(`users/${Object.keys(olduser.val())[0]}`).update({
 						description: description
 					});
 					resolve(olduser);
@@ -98,7 +98,7 @@ export function UPDATE_DESCRIPTION(username, description) {
 
 	let getUpdatedUser = () => {
 		return new Promise((resolve, reject) => {
-			database.ref("users").orderByChild("name").equalTo(username).once("value")
+			database().ref("users").orderByChild("name").equalTo(username).once("value")
 				.then(user => resolve(user))
 				.catch(err => reject(err));
 		});

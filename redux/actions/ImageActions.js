@@ -5,7 +5,7 @@ import { getPostsAsArrays, memoize,checkIfDuplicate,removeDuplicate } from "../.
 export function SHOW_NEWEST() {
 	return (dispatch) => {
 		dispatch({ type: "FETCHING", payload: null });
-		database.ref("posts").limitToLast(9).once("value")
+		database().ref("posts").limitToLast(9).once("value")
 			.then(data => {
 				if (null !== data.val()) {
 
@@ -20,7 +20,7 @@ export function SHOW_NEWEST() {
 export function SHOW_RELATED_POSTS(username) {
 	return (dispatch) => {
 		dispatch({ type: "FETCHING", payload: null });
-		database.ref("posts").orderByChild("author/authorName").equalTo(username).once("value")
+		database().ref("posts").orderByChild("author/authorName").equalTo(username).once("value")
 			.then(data => {
 				dispatch({ type: "USER_POSTS_FOUND", payload: getPostsAsArrays(data).reverse() });
 			})
@@ -35,28 +35,28 @@ export function SHOW_RELATED_POSTS(username) {
 export function UPLOAD_IMAGE(img, userId, user, description) {
 	let uploadImg = () => {
 		return new Promise((resolve, reject) => {
-			storage.ref().child(`images/${user}/posts/${img.name}`).put(img)
+			storage().ref().child(`images/${user}/posts/${img.name}`).put(img)
 				.then(() => resolve(null))
 				.catch(err => reject(err));
 		});
 	};
 	let generateKey = () => {
 		return new Promise((resolve) => {
-			let key = database.ref().child("posts").push().key;
+			let key = database().ref().child("posts").push().key;
 			resolve(key);
 		});
 
 	};
 	let getUrl = () => {
 		return new Promise((resolve, reject) => {
-			storage.ref().child(`images/${user}/posts/${img.name}`).getDownloadURL()
+			storage().ref().child(`images/${user}/posts/${img.name}`).getDownloadURL()
 				.then(url => resolve(url))
 				.catch(err => reject(err));
 		});
 	};
 	let createPost = (newKey, url) => {
 		return new Promise((resolve, reject) => {
-			database.ref(`posts/${newKey}`).set({
+			database().ref(`posts/${newKey}`).set({
 				photoURL: url,
 				photoPATH: `images/${user}/posts/${img.name}`,
 				description,
@@ -98,13 +98,13 @@ export function UPLOAD_IMAGE(img, userId, user, description) {
 export function ADD_COMMENT(username, postID, message) {
 	let generateKey = () => {
 		return new Promise((resolve) => {
-			let key = database.ref().child("posts").push().key;
+			let key = database().ref().child("posts").push().key;
 			resolve(key);
 		});
 	};
 	let postComment = (key) => {
 		return new Promise((resolve, reject) => {
-			database.ref(`posts/${postID}/comments/${key}`).set({
+			database().ref(`posts/${postID}/comments/${key}`).set({
 				user: username,
 				comment: message,
 				created_at: Date.now()
@@ -116,7 +116,7 @@ export function ADD_COMMENT(username, postID, message) {
 
 	let getUpdatedPosts = () => {
 		return new Promise((resolve, reject) => {
-			database.ref("posts").limitToFirst(9).once("value")
+			database().ref("posts").limitToFirst(9).once("value")
 				.then(posts => resolve(posts))
 				.catch(err => reject(err));
 		});
@@ -145,7 +145,7 @@ export function UPVOTE(username, postID) {
 	console.log(username, postID);
 	let getStars = () => {
 		return new Promise((resolve, reject) => {
-			database.ref(`posts/${postID}`).once("value")
+			database().ref(`posts/${postID}`).once("value")
 				.then(post => resolve(post.val().stars))
 				.catch(err => reject(err));
 		});
@@ -153,7 +153,7 @@ export function UPVOTE(username, postID) {
 
 	let getLikedPosts = () => {
 		return new Promise((resolve, reject) => {
-			database.ref("users").orderByChild("name").equalTo(username).once("value")
+			database().ref("users").orderByChild("name").equalTo(username).once("value")
 				.then(user => resolve(user.val()))
 				.catch(err => reject(err));
 		});
@@ -165,14 +165,14 @@ export function UPVOTE(username, postID) {
 			let old = likedPosts[Object.keys(likedPosts)[0]].liked;
 			let check = typeof old !== "undefined" ? checkIfDuplicate([...old, postID]) : false;
 			if (!check){
-				database.ref(`users/${Object.keys(likedPosts)}`).update({
+				database().ref(`users/${Object.keys(likedPosts)}`).update({
 					liked: typeof old !== "undefined" ? [...old, postID] : [postID]
 				})
 					.then(() => resolve(check))
 					.catch(err => reject(err));
 			}
 			else {
-				database.ref(`users/${Object.keys(likedPosts)}`).update({
+				database().ref(`users/${Object.keys(likedPosts)}`).update({
 					liked: typeof old !== "undefined" ? removeDuplicate([...old], postID) : [postID]
 				})
 					.then(() => resolve(check))
@@ -186,14 +186,14 @@ export function UPVOTE(username, postID) {
 		
 		return new Promise((resolve, reject) => {
 			if (duped) {
-				database.ref(`posts/${postID}`).update({
+				database().ref(`posts/${postID}`).update({
 					stars: oldStarcount - 1
 				})
 					.then(() => resolve("DEC"))
 					.catch(err => reject(err));
 			}
 			else {
-				database.ref(`posts/${postID}`).update({
+				database().ref(`posts/${postID}`).update({
 					stars: oldStarcount + 1
 				})
 					.then(() => resolve("INC"))
@@ -204,7 +204,7 @@ export function UPVOTE(username, postID) {
 
 	let getNewPosts = () => {
 		return new Promise((resolve,reject) => {
-			database.ref("posts").once("value")
+			database().ref("posts").once("value")
 				.then(posts => resolve(posts))
 				.catch(err => reject(err));
 		});

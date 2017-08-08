@@ -2,6 +2,7 @@ import React from "react";
 
 
 
+
 export function doesUserExist(Component) {
 	return class doesUserExist extends React.Component {
 		componentWillMount() {
