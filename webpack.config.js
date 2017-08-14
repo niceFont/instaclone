@@ -2,8 +2,9 @@ const webpack = require("webpack");
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 
+const env = process.env.NODE_ENV || "development";
 
-module.exports = {
+const webpackConfig = {
 	devtool: "eval",
 	entry: path.join(__dirname, "/components", "/Index.js"),
 	output: {
@@ -29,12 +30,26 @@ module.exports = {
 				NODE_ENV: JSON.stringify("production")
 			}
 		}),
-		new webpack.optimize.UglifyJsPlugin(),
 
 	],
-	"env": {
-		"test": {
-			"presets": ["es2015"]
-		}
-	}
 };
+
+  
+if (env === "production") {
+	webpackConfig.plugins.push(
+		new webpack.LoaderOptionsPlugin({
+			minimize: true,
+			debug: false,
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			compress: {
+				unused: true,
+				dead_code: true,
+				warnings: false,
+			},
+		})
+	);
+}
+
+
+module.exports = webpackConfig;

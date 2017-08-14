@@ -1,10 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import Image from "./dumb-components/Home/Images.jsx";
+import Images from "./dumb-components/Home/Images.jsx";
 import Landing from "./dumb-components/Home/Landing.jsx";
 import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
-import PropTypes from "prop-types";
-import Modal from "./dumb-components/Modal.jsx";
+import { Container} from "semantic-ui-react";
+//import Modal from "./dumb-components/Modal.jsx";
 import {ImageModal} from "./dumb-components/ImageModal.jsx";
 
 
@@ -49,18 +49,14 @@ export class Home extends React.Component {
 			<div>
 				{
 					this.state.isOpen && 
-				<Modal closeModal={this.closeModal}>
+				<Modal>
 					<ImageModal handleUpvote={this.handleUpvote} {...this.props} data={this.state.data} />
 				</Modal>
 				}
 				<Landing />
-				<div className="container">
-					<div id="newest" className="row">
-						<div className="col s12 m12 l12">
-							<Image {...this.props} openModal={this.openModal}/>
-						</div>
-					</div>
-				</div>
+				<Container>
+					<Images {...this.props} openModal={this.openModal}/>
+				</Container>
 			</div>
 		);
 	}

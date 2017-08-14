@@ -5,6 +5,7 @@ import {shallow, mount} from "enzyme";
 import {Home} from "../Home.jsx";
 import Modal from "../dumb-components/Modal.jsx";
 import {ImageModal} from "../dumb-components/ImageModal.jsx";
+import Comments from "../dumb-components/Comments.jsx";
 
 const minprops = {
 	SHOW_NEWEST: () => {},
@@ -24,7 +25,23 @@ const minprops = {
 					authorId: "wadawdawd",
 					authorName: "Jim"
 				},
-				comments: [],
+				comments: [
+					{
+						comment: "awdwa",
+						created_at: 34234324,
+						user: "Jim"
+					},
+					{
+						comment: "awdwa",
+						created_at: 34234324,
+						user: "Jim"
+					},
+					{
+						comment: "awdwa",
+						created_at: 34234324,
+						user: "Jim"
+					},
+				],
 				description: "wdawd",
 				photoPATH: "wdawdawd",
 				photoURL: "dwawdawd",
@@ -45,7 +62,6 @@ describe("Component: Home", () => {
 	});
     
 	it("should render Images", () => {
-		
 		const wrapper = mount(<Home {...minprops} />);
 		expect(wrapper.props().imageReducer.posts.length).toEqual(1);
 	});
@@ -57,7 +73,6 @@ describe("Component: Home", () => {
 	});
     
 	it("should render Modal Component", () => {
-		
 		const wrapper = mount(<Home {...minprops} />);
 		wrapper.setState({isOpen: true, data: 0});
 		expect(wrapper.find(Modal).length).toEqual(1);
@@ -67,5 +82,13 @@ describe("Component: Home", () => {
 		const wrapper = mount(<Home {...minprops} />);
 		wrapper.setState({isOpen: true, data: 0});
 		expect(wrapper.find(ImageModal).length).toEqual(1);
+	});
+
+	it("should render Modal with Comments", () => {
+		const wrapper = mount(<Home {...minprops}>
+			<Comments {...minprops} />
+		</Home>);
+		wrapper.setState({isOpen: true, data: 0});
+		expect(wrapper.find("p").exists()).toBe(true);
 	});
 }); 

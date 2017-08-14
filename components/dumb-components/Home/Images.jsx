@@ -1,41 +1,37 @@
 import React from "react";
 import {ImageLoaderHOC} from "../../higher-order-components/ImageHOC.jsx";
 import {Link} from "react-router";
+import {Card, Image, Icon} from "semantic-ui-react";
 
-const Image = (props) => {
+const Images = (props) => {
 	return (
-		<li 
+		<Card
 			onClick={() => props.openModal(props.index)} 
 			key={props.index} 
-			className = "col s12 m6 l4" 
 		> 
-			<div className="card large">
-				<div className="card-image">
-					<img className="responsive-img" src={props.photoURL}/>
-				</div>
-				<div className="card-content">
-					<p><b>
-						<Link 
-							className="black-text" 
-							to={`user/${props.author.authorName}`}>
-							{props.author.authorName + " "}
-						</Link>
-					</b>{props.description.length > 150 ? props.description.slice(0,150)+ "...more": props.description}</p>
-				</div>
-				<div className="card-action valign-wrapper">
-					<div className="col l6 valign-wrapper">
-						<span>
-							{props.stars}
-						</span>
-						<i className="material-icons">favorite</i>
-					</div>
-					<div className="col l6 valign-wrapper">
-						<span><i>{`${props.comments.length} Comments`}</i></span>
-					</div>
-				</div>
-			</div> 
-		</li>
+			<Image src={props.photoURL}/>
+			<Card.Content>
+				
+				<Card.Header>
+					<Link 
+						className="black-text" 
+						to={`user/${props.author.authorName}`}>
+						{props.author.authorName + " "}
+					</Link>
+				</Card.Header>
+				<Card.Description>
+					<p>{props.description.length > 150 ? props.description.slice(0,150)+ "...more": props.description}</p>
+				</Card.Description>
+			</Card.Content> 
+			<Card.Content extra>
+				<span>
+					{props.stars}<Icon name="heartbeat"/>
+				</span>
+				<span><i>{`${props.comments.length} Comments`}</i></span>
+				
+			</Card.Content>
+		</Card>
 		
 	);};
 
-module.exports = ImageLoaderHOC(Image);
+module.exports = ImageLoaderHOC(Images);
