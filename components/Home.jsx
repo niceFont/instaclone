@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import Images from "./dumb-components/Home/Images.jsx";
 import Landing from "./dumb-components/Home/Landing.jsx";
 import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
-import { Container} from "semantic-ui-react";
+import { Container, Segment} from "semantic-ui-react";
 //import Modal from "./dumb-components/Modal.jsx";
 import {ImageModal} from "./dumb-components/ImageModal.jsx";
 
@@ -54,9 +54,11 @@ export class Home extends React.Component {
 				</Modal>
 				}
 				<Landing />
-				<Container>
-					<Images {...this.props} openModal={this.openModal}/>
-				</Container>
+				<Segment padded="very" basic>
+					<Container>
+						<Images {...this.props} openModal={this.openModal}/>
+					</Container>
+				</Segment>
 			</div>
 		);
 	}

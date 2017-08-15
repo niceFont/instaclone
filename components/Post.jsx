@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {mapStateToProps, mapDispatchToProps} from "../redux/MapProps.js";
 import {WaitForUpload} from "./higher-order-components/SignupHOC.jsx";
+import { Container, Segment, Grid, Form, Button, TextArea, Image, Icon} from "semantic-ui-react";
 
 
 class Post extends React.Component {
@@ -56,29 +57,33 @@ class Post extends React.Component {
 
 	render() {
 		return (
-			<div className="container">
-				<div className="row">
-					<div className="col l2 offset-l5 center-align">
-						<img ref={img => this.preimg = img } className="responsive-img" />
-					</div>
-					<form onSubmit={this.handleSubmit} className="col l8 offset-l2">
-						<div className="file-field input-field">
-							<div className="btn">
-								<span>File</span>
-								<input type="file" ref={img => this.prefile = img} onChange={this.handleChange} />
-							</div>
-							<div className="file-path-wrapper">
-								<input type="text" ref={txt => this.prename = txt} placeholder="Select your Local File." className="file-path validate" />
-							</div>
-						</div>
-						<div className="input-field">
-							<textarea ref={txt => this.desc = txt} placeholder="Description" className="materialize-textarea"></textarea>
-						</div>
-						<input className="btn-large" type="submit" value="Post" />
-					</form>
-				</div>
-
-			</div>
+			<Segment basic padded="very">
+				<Container textAlign="center">
+					<Grid columns={2} textAlign="center">
+						<Grid.Row textAlign="center">
+							<Image as="img" src="" ref={img => this.preimg = img }  />
+						</Grid.Row>
+						<Grid.Row>
+							<Segment padded="very">
+								<Form onSubmit={this.handleSubmit}>
+									<Form.Field required>
+										<label for="file" class="ui icon button">
+											<Icon>upload</Icon>
+											Open File</label>
+										<input  type="file" ref={img => this.prefile = img} onChange={this.handleChange} />
+									</Form.Field>
+									<Form.Field required>
+										<label>Enter your Description</label>
+										<TextArea ref={txt => this.desc = txt} placeholder="Description" className="materialize-textarea"></TextArea>
+									</Form.Field>	
+									<Button fluid type="submit">Submit</Button>
+								</Form>
+							</Segment>
+						</Grid.Row>
+					</Grid>
+				</Container>
+			</Segment>
+			
 		);
 	}
 }
