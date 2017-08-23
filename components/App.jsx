@@ -13,7 +13,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				< div className = "navbar-fixed" > <nav>
+				<div className="navbar-fixed" > <nav>
 					<div id="nav" className="nav-wrapper white">
 						<ul className="right">
 							{!this.props.authReducer.guest && 

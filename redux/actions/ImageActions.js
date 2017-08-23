@@ -221,10 +221,6 @@ export function UPVOTE(username, postID) {
 
 			let [a,b,c,d,e] = await Promise.all([stars(),old(), update() ,upvote(), newPosts()]);
 
-			console.log(a);
-			console.log(b);
-			console.log(c);
-			console.log(d);
 			dispatch({type: "UPVOTE_FULFILLED", payload: getPostsAsArrays(e)});
 			
 		}
@@ -233,4 +229,8 @@ export function UPVOTE(username, postID) {
 		}
 
 	};
+}
+
+function deleteComment(postID, commentID) {
+
 }

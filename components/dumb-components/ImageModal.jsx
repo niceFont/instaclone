@@ -70,16 +70,17 @@ export class ImageModal extends React.Component {
 					
 					
 				</div>
-				{!this.props.authReducer.guest ?  <div className="row">
-					<div className="col l10 offset-l1">
-						<form onSubmit={this.handleComment}>
-							<div className="input-field">
-								<textarea ref={(comment => this.comment = comment)} placeholder="Tell us what you think..." className="materialize-textarea"></textarea>
-							</div>
-							<input type="submit" value="Post" className="btn btn-small" />
-						</form>
+				{!this.props.authReducer.guest ?  
+					<div className="row">
+						<div className="col l10 offset-l1">
+							<form onSubmit={this.handleComment}>
+								<div className="input-field">
+									<textarea ref={(comment => this.comment = comment)} placeholder="Tell us what you think..." className="materialize-textarea"></textarea>
+								</div>
+								<input type="submit" value="Post" className="btn btn-small" />
+							</form>
+						</div>
 					</div>
-				</div>
 					:
 
 					<div className="col l10 offset-l1 center-align">

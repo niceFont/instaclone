@@ -1,13 +1,13 @@
 import firebase from "firebase";
-
+require("dotenv").config();
 
 const config = {
-	apiKey: "AIzaSyCqEnIRA45bePC7lxBhVbAEIcTF2o4u2Yk",
-	authDomain: "instaclone-14120.firebaseapp.com",
-	databaseURL: "https://instaclone-14120.firebaseio.com",
-	projectId: "instaclone-14120",
-	storageBucket: "instaclone-14120.appspot.com",
-	messagingSenderId: "167684553182"
+	apiKey: process.env.APIKEY,
+	authDomain: process.env.AUTHDOMAIN,
+	databaseURL: process.env.DATABASEURL,
+	projectId: process.env.PROJECTID,
+	storageBucket: process.env.STORAGEBUCKET,
+	messagingSenderId: process.env.MESSAGINGSENDERID
 };
 
 firebase.initializeApp(config);

@@ -36,7 +36,7 @@ export function authReducer(state = initialstate, action) {
 			guest: false
 		};
 	case "IS_GUEST":
-		return {...state, guest: true, isLoggedIn: false, user: action.payload };
+		return {...state, guest: true, isLoggedIn: false, user: {currentUser: action.payload} };
 	case "IS_NOT_LOGGEDIN":
 		return {...state,
 			isLoggedIn: action.payload
